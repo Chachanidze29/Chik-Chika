@@ -276,3 +276,27 @@ aside{
     margin: 0.5rem 0.5rem 0.5rem 0;
     font-size: 1.5rem;
 }
+
+.post-footer {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.post-footer a {
+    text-decoration: none;
+    background-color: lightpink;
+    color: white;
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    border-radius: 10%;
+}
+
+.post-footer a:hover {
+    background-color: transparent;
+    color: lightpink;
+    border: 1px solid lightpink;
+    cursor: pointer;
+}

@@ -3,9 +3,13 @@
 namespace App\Providers;
 
 use App\Events\Followed;
+use App\Events\Liked;
+use App\Events\Tweeted;
 use App\Events\Unfollowed;
 use App\Listeners\SendFollowNotification;
 use App\Listeners\SendUnfollowNotificaton;
+use App\Notifications\SendLikedNotification;
+use App\Notifications\SendTweetNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,6 +31,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         Unfollowed::class => [
             SendUnfollowNotificaton::class
+        ],
+        Tweeted::class=> [
+            SendTweetNotification::class
+        ],
+        Liked::class => [
+            SendLikedNotification::class
         ]
     ];
 

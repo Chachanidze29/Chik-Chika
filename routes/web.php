@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
@@ -43,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/unfollow/{id}',[FolloWcontroller::class,'destroy'])->whereNumber('id')->name('unfollow');
     Route::post('/post/{id}/like',[LikeController::class,'like'])->whereNumber('id')->name('like');
     Route::post('/post/{id}/unlike',[LikeController::class,'unlike'])->whereNumber('id')->name('unlike');
+    Route::post('/post/{id}/comment',[CommentController::class,'create'])->name('comment');
     Route::get('/{username}/following',[ProfileStatsController::class,'following'])->name('following');
     Route::get('/{username}/followers',[ProfileStatsController::class,'followers'])->name('followers');
     Route::get('/{username}/likes',[ProfileStatsController::class,'likes'])->name('likes');
