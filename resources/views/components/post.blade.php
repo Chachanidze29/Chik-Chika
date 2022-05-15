@@ -6,17 +6,19 @@
         </object>
     </a>
     <div class="post-footer">
-        @if($post->likedBy->contains(\Illuminate\Support\Facades\Auth::id()))
-            <form action="{{route('unlike',['id'=>$post->id])}}" method="post">
-                @csrf
-                <input class="unfollowunlike" type="submit" value="Unlike {{count($post->likedBy)}}"/>
-            </form>
-        @else
-            <form action="{{route('like',['id'=>$post->id])}}" method="post">
-                @csrf
-                <input class="followlike" type="submit" value="Like {{count($post->likedBy)}}"/>
-            </form>
-        @endif
+        @auth
+            @if($post->likedBy->contains(\Illuminate\Support\Facades\Auth::id()))
+                <form action="{{route('unlike',['id'=>$post->id])}}" method="post">
+                    @csrf
+                    <input class="unfollowunlike" type="submit" value="Unlike {{count($post->likedBy)}}"/>
+                </form>
+            @else
+                <form action="{{route('like',['id'=>$post->id])}}" method="post">
+                    @csrf
+                    <input class="followlike" type="submit" value="Like {{count($post->likedBy)}}"/>
+                </form>
+            @endif
+        @endauth
         <a href="{{url('/post',[$post->id])}}">Comments {{count($post->comments)}}</a>
     </div>
 </div>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\Events\Liked;
-use App\Events\Unliked;
 use App\Models\User;
 use App\Services\PostService;
 use App\Services\UserService;

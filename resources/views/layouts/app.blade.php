@@ -22,9 +22,11 @@
                 </div>
                 @if(end($res) !== 'home')
                     <h2 class="sub-title goback">
-                        <a href="@yield('back_url')">
-                            <img src="{{url('/images/arrow.png')}}" alt="arrow"/>
-                        </a>
+                        @auth
+                            <a href="@yield('back_url')">
+                                <img src="{{url('/images/arrow.png')}}" alt="arrow"/>
+                            </a>
+                        @endauth
                         <span>@yield('title')</span>
                     </h2>
                 @else
@@ -39,18 +41,20 @@
         <main>
             @section('sidebar')
                 <nav>
-                    <a href="{{route('home')}}" class="navlink hovereffect with-image">
-                        <img src="{{url('/images/home.png')}}" alt="home logo">
-                        <span>Home</span>
-                    </a>
-                    <a href="{{url('/',$username)}}" class="navlink hovereffect with-image">
-                        <img src="{{url('/images/profile.png')}}" alt="profile logo">
-                        <span>Profile</span>
-                    </a>
-                    <a href="{{route('logout')}}" class="navlink hovereffect with-image">
-                        <img src="{{url('/images/logout.png')}}" alt="logout logo">
-                        <span>Log Out</span>
-                    </a>
+                    @auth
+                        <a href="{{route('home')}}" class="navlink hovereffect with-image">
+                            <img src="{{url('/images/home.png')}}" alt="home logo">
+                            <span>Home</span>
+                        </a>
+                        <a href="{{url('/',\Illuminate\Support\Facades\Auth::user()->username)}}" class="navlink hovereffect with-image">
+                            <img src="{{url('/images/profile.png')}}" alt="profile logo">
+                            <span>Profile</span>
+                        </a>
+                        <a href="{{route('logout')}}" class="navlink hovereffect with-image">
+                            <img src="{{url('/images/logout.png')}}" alt="logout logo">
+                            <span>Log Out</span>
+                        </a>
+                    @endauth
                 </nav>
             @show
             <div class="container">

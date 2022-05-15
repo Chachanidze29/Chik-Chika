@@ -17,7 +17,8 @@ class SearchController extends Controller
         ]);
 
         return view('search',[
-            'users'=>$this->userService->getUsersByQuery($validated['search'])
+            'users'=>$this->userService->getUsersByQuery($validated['search']),
+            'username'=>$validated['search']
         ]);
     }
 }

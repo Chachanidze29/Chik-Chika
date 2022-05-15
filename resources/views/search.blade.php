@@ -1,6 +1,6 @@
-@extends('layouts.app',['username'=>\Illuminate\Support\Facades\Auth::user()->username])
+@extends('layouts.app')
 
-@section('title','Search')
+@section('title',$username)
 @section('back_url',redirect()->back()->getTargetUrl())
 
 @section('content')
