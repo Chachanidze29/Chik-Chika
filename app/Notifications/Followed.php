@@ -32,7 +32,7 @@ class Followed extends Notification
 
     public function toArray($notifiable) {
         return [
-            'username'=>$this->username
+            'username'=>$this->username,
         ];
     }
 
