@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -11,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Unfollowed
+class LikedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,9 +21,8 @@ class Unfollowed
      *
      * @return void
      */
-    public function __construct(protected User $user)
+    public function __construct(public Post $post,public User $user)
     {
-        //
     }
 
     /**

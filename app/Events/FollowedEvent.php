@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -12,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Liked
+class FollowedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,13 +20,9 @@ class Liked
      *
      * @return void
      */
-    public $post;
-    public $user;
-
-    public function __construct(Post $post,User $user)
+    public function __construct(public User $user,public string $username)
     {
-        $this->post = $post;
-        $this->user = $user;
+        //
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\Tweeted;
+use App\Events\TweetedEvent;
 use App\Models\Post;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -37,7 +37,7 @@ class PostController extends Controller
             'user_id' => $user->id
         ]);
 
-        event(new Tweeted($user));
+        event(new TweetedEvent($user));
 
         return redirect(RouteServiceProvider::HOME);
     }

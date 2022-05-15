@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\Followed;
+use App\Events\FollowedEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -24,8 +24,8 @@ class SendFollowNotification
      * @param  object  $event
      * @return void
      */
-    public function handle(Followed $event)
+    public function handle(FollowedEvent $event)
     {
-        //
+        $event->user->notify(new \App\Notifications\Followed($event->username));
     }
 }

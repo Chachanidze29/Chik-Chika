@@ -37,9 +37,11 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('isPrivate')->group(function () {
-    Route::get('/{username}/following',[ProfileStatsController::class,'following'])->name('following');
-    Route::get('/{username}/followers',[ProfileStatsController::class,'followers'])->name('followers');
-    Route::get('/{username}/likes',[ProfileStatsController::class,'likes'])->name('likes');
+    Route::controller(ProfileStatsController::class)->group(function () {
+        Route::get('/{username}/following','following')->name('following');
+        Route::get('/{username}/followers','followers')->name('followers');
+        Route::get('/{username}/likes','likes')->name('likes');
+    });
 });
 
 Route::get('/post/{id}',[PostController::class,'index'])->whereNumber('id');

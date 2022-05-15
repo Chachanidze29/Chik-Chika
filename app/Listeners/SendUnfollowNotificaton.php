@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\Unfollowed;
+use App\Events\UnfollowedEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -24,8 +24,8 @@ class SendUnfollowNotificaton
      * @param  object  $event
      * @return void
      */
-    public function handle(Unfollowed $event)
+    public function handle(UnfollowedEvent $event)
     {
-        //
+        $event->user->notify(new \App\Notifications\Unfollowed($event->username));
     }
 }

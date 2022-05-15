@@ -1,6 +1,3 @@
-@php
-    $res = explode('/',url()->current());
-@endphp
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,7 +17,7 @@
                         <img src="{{url('/images/logo.png')}}" alt="Logo" class="hovereffect"/>
                     </a>
                 </div>
-                @if(end($res) !== 'home')
+                @if(\Illuminate\Support\Facades\Route::currentRouteName() !== 'home')
                     <h2 class="sub-title goback">
                         @auth
                             <a href="@yield('back_url')">

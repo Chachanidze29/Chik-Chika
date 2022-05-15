@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Events\Liked;
+use App\Events\LikedEvent;
 use App\Models\User;
 use App\Services\PostService;
 use App\Services\UserService;
@@ -19,7 +19,7 @@ class LikeController extends Controller
         $user = User::find(Auth::id());
         $user->likes()->attach($post);
 
-        event(new Liked($post,$user));
+        event(new LikedEvent($post,$user));
 
         return redirect()->back();
     }

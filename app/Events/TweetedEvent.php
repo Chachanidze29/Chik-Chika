@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Followed
+class TweetedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,9 +20,9 @@ class Followed
      *
      * @return void
      */
-    public function __construct(protected User $user)
+
+    public function __construct(public User $user)
     {
-        //
     }
 
     /**
