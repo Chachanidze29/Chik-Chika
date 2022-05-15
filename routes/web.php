@@ -24,13 +24,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/{id}/comment',[CommentController::class,'create'])->name('comment');
     Route::post('/{username}/private',[EditProfileController::class,'makePrivate'])->name('makePrivate');
     Route::post('/{username}/public',[EditProfileController::class,'makePublic'])->name('makePublic');
-    Route::get('/{username}/following',[ProfileStatsController::class,'following'])->name('following');
-    Route::get('/{username}/followers',[ProfileStatsController::class,'followers'])->name('followers');
-    Route::get('/{username}/likes',[ProfileStatsController::class,'likes'])->name('likes');
-
 });
 
-Route::middleware('guest')->group(function (){
+Route::middleware('guest')->group(function () {
     Route::get('/', function () {
         return view('welcome');
     });
@@ -38,6 +34,12 @@ Route::middleware('guest')->group(function (){
     Route::post('/login',[LoginController::class,'authenticate']);
     Route::get('/signup',[SignUpController::class,'index'])->name('signup');
     Route::post('/signup',[SignUpController::class,'store']);
+});
+
+Route::middleware('isPrivate')->group(function () {
+    Route::get('/{username}/following',[ProfileStatsController::class,'following'])->name('following');
+    Route::get('/{username}/followers',[ProfileStatsController::class,'followers'])->name('followers');
+    Route::get('/{username}/likes',[ProfileStatsController::class,'likes'])->name('likes');
 });
 
 Route::get('/post/{id}',[PostController::class,'index'])->whereNumber('id');

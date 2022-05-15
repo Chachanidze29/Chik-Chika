@@ -11,8 +11,11 @@ class UserService
         return User::where('username',$userName)->first();
     }
 
-    public function getUserById(int $uuid) {
-        return User::find($uuid);
+    public function getUserById(int|null $uuid) {
+        if($uuid) {
+            return User::find($uuid);
+        }
+        return null;
     }
 
     public function getUsersByQuery(string $query) {
