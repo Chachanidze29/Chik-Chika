@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\CommentedEvent;
 use App\Events\FollowedEvent;
 use App\Events\LikedEvent;
 use App\Events\TweetedEvent;
 use App\Events\UnfollowedEvent;
+use App\Listeners\SendCommentNotification;
 use App\Listeners\SendFollowNotification;
 use App\Listeners\SendLikedNotification;
 use App\Listeners\SendTweetNotification;
@@ -36,6 +38,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         LikedEvent::class => [
             SendLikedNotification::class
+        ],
+        CommentedEvent::class => [
+            SendCommentNotification::class
         ]
     ];
 

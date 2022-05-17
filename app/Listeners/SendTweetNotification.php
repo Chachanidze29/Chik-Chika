@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\TweetedEvent;
-use App\Notifications\Tweeted as TweetedNotification;
+use App\Notifications\Tweeted;
 
 class SendTweetNotification
 {
@@ -15,7 +15,7 @@ class SendTweetNotification
     public function handle(TweetedEvent $event) {
         $username = $event->user->username;
         foreach ($event->user->followers as $follower) {
-            $follower->notify(new TweetedNotification($username));
+            $follower->notify(new Tweeted($username,$event->postId));
         }
     }
 }

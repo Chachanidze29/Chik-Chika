@@ -47,6 +47,10 @@
                             <img src="{{url('/images/profile.png')}}" alt="profile logo">
                             <span>Profile</span>
                         </a>
+                        <a href="{{route('notifications',\Illuminate\Support\Facades\Auth::user()->username)}}" class="navlink hovereffect with-image">
+                            <img src="{{url('/images/profile.png')}}" alt="profile logo">
+                            <span>Notifications</span>
+                        </a>
                         <a href="{{route('logout')}}" class="navlink hovereffect with-image">
                             <img src="{{url('/images/logout.png')}}" alt="logout logo">
                             <span>Log Out</span>

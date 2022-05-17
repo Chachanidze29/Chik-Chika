@@ -6,12 +6,15 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileStatsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
+
+//Add route for seeing a comment
 
 Route::middleware('auth')->group(function () {
     Route::get('/home',[HomeController::class,'index'])->name('home');
@@ -24,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/{id}/comment',[CommentController::class,'create'])->name('comment');
     Route::post('/{username}/private',[EditProfileController::class,'makePrivate'])->name('makePrivate');
     Route::post('/{username}/public',[EditProfileController::class,'makePublic'])->name('makePublic');
+    Route::get('/{username}/notifications',[NotificationsController::class,'index'])->name('notifications');
 });
 
 Route::middleware('guest')->group(function () {
@@ -44,6 +48,6 @@ Route::middleware('isPrivate')->group(function () {
     });
 });
 
-Route::get('/post/{id}',[PostController::class,'index'])->whereNumber('id');
+Route::get('/post/{id}',[PostController::class,'index'])->whereNumber('id')->name('post');
 Route::get('/search',[SearchController::class,'index'])->name('search');
 Route::get('/{username}',[UserProfileController::class,'index'])->middleware('checkIfExists');

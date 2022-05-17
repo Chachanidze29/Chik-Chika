@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\UnfollowedEvent;
-use App\Notifications\Unfollowed;
+use App\Events\CommentedEvent;
+use App\Notifications\Commented;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendUnfollowNotificaton
+class SendCommentNotification
 {
     /**
      * Create the event listener.
@@ -25,8 +25,8 @@ class SendUnfollowNotificaton
      * @param  object  $event
      * @return void
      */
-    public function handle(UnfollowedEvent $event)
+    public function handle(CommentedEvent $event)
     {
-        $event->user->notify(new Unfollowed($event->username));
+        $event->user->notify(new Commented($event->user->username,$event->postId,$event->commentId));
     }
 }

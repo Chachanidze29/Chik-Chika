@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TweetedEvent
+class CommentedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,9 +20,9 @@ class TweetedEvent
      *
      * @return void
      */
-
-    public function __construct(public User $user,public int $postId)
+    public function __construct(public User $user,public int $postId,public int $commentId)
     {
+        //
     }
 
     /**

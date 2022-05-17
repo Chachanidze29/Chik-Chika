@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Unfollowed extends Notification
+class Commented extends Notification
 {
     use Queueable;
 
@@ -16,7 +16,7 @@ class Unfollowed extends Notification
      *
      * @return void
      */
-    public function __construct(public string $username)
+    public function __construct(protected string $username,protected int $postId,protected int $commentId)
     {
         //
     }
@@ -40,9 +40,11 @@ class Unfollowed extends Notification
      */
     public function toArray($notifiable)
     {
+//        commentRoute using $this->commentId
         return [
             'username'=>$this->username,
-            'text'=>"Has Unfollowed You"
+            'text'=>'Has Wrote A Comment On Your',
+            'postRoute'=>route('post',$this->postId)
         ];
     }
 }

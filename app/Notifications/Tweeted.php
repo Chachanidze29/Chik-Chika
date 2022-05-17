@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -17,7 +18,7 @@ class Tweeted extends Notification
      *
      * @return void
      */
-    public function __construct(protected string $username)
+    public function __construct(protected string $username,protected int $postId)
     {
         //
     }
@@ -42,7 +43,9 @@ class Tweeted extends Notification
     public function toArray($notifiable)
     {
         return [
-            'username'=>$this->username
+            'username'=>$this->username,
+            'text'=>"Has Tweeted",
+            'postRoute'=>route('post',$this->postId)
         ];
     }
 }

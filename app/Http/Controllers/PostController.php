@@ -32,12 +32,12 @@ class PostController extends Controller
 
         $user = User::find(Auth::id());
 
-        Post::create([
+        $post = Post::create([
             'content' => $validated['content'],
             'user_id' => $user->id
         ]);
 
-        event(new TweetedEvent($user));
+        event(new TweetedEvent($user,$post->id));
 
         return redirect(RouteServiceProvider::HOME);
     }

@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\LikedEvent;
+use App\Notifications\Liked;
 
 class SendLikedNotification
 {
@@ -11,6 +12,6 @@ class SendLikedNotification
     }
 
     public function handle(LikedEvent $event) {
-        $event->post->user->notify(new \App\Notifications\Liked($event->user->username));
+        $event->post->user->notify(new Liked($event->user->username,$event->post->id));
     }
 }
