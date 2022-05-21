@@ -4,36 +4,35 @@
 @section('back_url','/home')
 
 @section('content')
-    <div class="post">
+    <div class="flex flex-col bg-gray-100 rounded p-2">
             <object>
-                <h2><a href="{{url('/',[$post->user->username])}}" class="userlink">{{$post->user->username}}</a></h2>
-                <p class="post-content">{{$post->content}}</p>
+                <x-user-link href="{{url('/',[$post->user->username])}}" value="{{$post->user->username}}"/>
+                <p class="text-lg m-2 ml-0">{{$post->content}}</p>
             </object>
-        <div class="post-footer">
+        <div class="flex items-center justify-center">
             @auth
                 @if($post->likedBy->contains(\Illuminate\Support\Facades\Auth::id()))
                     <form action="{{route('unlike',['id'=>$post->id])}}" method="post">
                         @csrf
-                        <input class="unfollowunlike" type="submit" value="Unlike {{count($post->likedBy)}}"/>
+                        <x-like-unlike-button type="submit" value="Unlike {{count($post->likedBy)}}"/>
                     </form>
                 @else
                     <form action="{{route('like',['id'=>$post->id])}}" method="post">
                         @csrf
-                        <input class="followlike" type="submit" value="Like {{count($post->likedBy)}}"/>
+                        <x-like-unlike-button type="submit" value="Like {{count($post->likedBy)}}"/>
                     </form>
                 @endif
             @endauth
         </div>
+        @auth
+            <form class="flex mt-4 pt-2 border-t-2 flex-row justify-between items-center" method="post" action="{{route('comment',['id'=>$post->id])}}">
+                @csrf
+                <textarea placeholder="Reply..." class="basis-4/5 p-2" name="content"></textarea>
+                <x-submit-button type="submit" value="Submit"/>
+            </form>
+        @endauth
     </div>
-    @auth
-        <form method="post" action="{{route('comment',['id'=>$post->id])}}">
-            @csrf
-            <input type="text" name="content"/>
-            <input type="submit"/>
-        </form>
-    @endauth
     @foreach($comments as $comment)
-        <p>{{$comment->user->username}}</p>
-        <p>{{$comment->content}}</p>
+        <x-comment :comment="$comment"/>
     @endforeach
 @endsection

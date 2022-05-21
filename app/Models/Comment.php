@@ -12,7 +12,8 @@ class Comment extends Model
     protected $fillable = [
         'content',
         'user_id',
-        'post_id',
+        'commentable_id',
+        'commentable_type'
     ];
 
     public function post() {
@@ -25,5 +26,9 @@ class Comment extends Model
 
     public function likedBy() {
         return $this->belongsToMany(User::class,'likes','user_id','post_id')->withTimestamps();
+    }
+
+    public function replies() {
+        return $this->hasMany(Comment::class,'parent_id');
     }
 }

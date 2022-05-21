@@ -14,8 +14,6 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
-//Add route for seeing a comment
-
 Route::middleware('auth')->group(function () {
     Route::get('/home',[HomeController::class,'index'])->name('home');
     Route::get('/logout',[LoginController::class,'destroy'])->name('logout');
@@ -25,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/{id}/like',[LikeController::class,'like'])->whereNumber('id')->name('like');
     Route::post('/post/{id}/unlike',[LikeController::class,'unlike'])->whereNumber('id')->name('unlike');
     Route::post('/post/{id}/comment',[CommentController::class,'create'])->name('comment');
+    Route::post('/comment/{id}/reply',[CommentController::class,'createReply'])->name('reply');
     Route::post('/{username}/private',[EditProfileController::class,'makePrivate'])->name('makePrivate');
     Route::post('/{username}/public',[EditProfileController::class,'makePublic'])->name('makePublic');
     Route::get('/{username}/notifications',[NotificationsController::class,'index'])->name('notifications');
@@ -49,5 +48,6 @@ Route::middleware('isPrivate')->group(function () {
 });
 
 Route::get('/post/{id}',[PostController::class,'index'])->whereNumber('id')->name('post');
+Route::get('/comment/{id}',[CommentController::class,'index'])->whereNumber('id')->name('seeComment');
 Route::get('/search',[SearchController::class,'index'])->name('search');
 Route::get('/{username}',[UserProfileController::class,'index'])->middleware('checkIfExists');
