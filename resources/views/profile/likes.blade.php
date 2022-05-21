@@ -4,11 +4,11 @@
 @section('back_url','/'.$username)
 
 @section('content')
-    <nav class="following-follower-nav">
-        <a href="{{url($username)}}" class="hovereffect">Tweets</a>
-        <a href="{{route('followers',['username'=>$username])}}" class="hovereffect">Followers</a>
-        <a href="{{route('following',['username'=>$username])}}" class="hovereffect">Following</a>
-        <a href="{{route('likes',['username'=>$username])}}" class="hovereffect active">Likes {{count($likes)}}</a>
+    <nav class="flex flex-row justify-between">
+        <x-profile-nav-link href="{{url($username)}}" value="Tweets"/>
+        <x-profile-nav-link href="{{route('followers',['username'=>$username])}}" value="Followers"/>
+        <x-profile-nav-link href="{{route('following',['username'=>$username])}}" value="Following" />
+        <x-profile-nav-link href="{{route('likes',['username'=>$username])}}" isActive="true" value="Likes {{count($likes)}}"/>
     </nav>
     <div class="user-list">
         @foreach($likes as $post)

@@ -4,15 +4,20 @@
 @section('back_url','/'.$username)
 
 @section('content')
-    <nav class="following-follower-nav">
-        <a href="{{url($username)}}" class="hovereffect">Tweets</a>
-        <a href="{{route('followers',['username'=>$username])}}" class="hovereffect active">Followers {{count($followers)}}</a>
-        <a href="{{route('following',['username'=>$username])}}" class="hovereffect">Following</a>
-        <a href="{{route('likes',['username'=>$username])}}" class="hovereffect">Likes</a>
+    <nav class="flex flex-row justify-between">
+        <x-profile-nav-link href="{{url($username)}}" value="Tweets"/>
+        <x-profile-nav-link href="{{route('followers',['username'=>$username])}}" value="Followers {{count($followers)}}" isActive="true"/>
+        <x-profile-nav-link href="{{route('following',['username'=>$username])}}" value="Following" />
+        <x-profile-nav-link href="{{route('likes',['username'=>$username])}}" value="Likes"/>
     </nav>
-    <div class="user-list">
+    <div class="flex flex-col">
+        <h1 class="text-2xl font-bold m-2 ml-0">Followers:</h1>
+        <ul>
         @foreach($followers as $follower)
-            <a class="userlink" href="{{url($follower->username)}}">{{$follower->username}}</a>
+            <li class="m-1 ml-0">
+                <x-user-link href="{{url($follower->username)}}" value="{{$follower->username}}"/>
+            </li>
         @endforeach
+        </ul>
     </div>
 @endsection

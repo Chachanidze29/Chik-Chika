@@ -4,19 +4,22 @@
 @section('back_url','home')
 
 @section('content')
-    <div class="profile-header">
-        <h1>{{$user->username}}</h1>
+    <div class="flex flex-col">
+        <div class="flex flex-col justify-between">
+            <h1 class="text-2xl m-2 ml-0">{{$user->username}}</h1>
+            <span class="text-sm text-gray-600">Joined At {{explode(' ',$user->created_at)[0]}}</span>
+        </div>
         @auth
             @if(\Illuminate\Support\Facades\Auth::id()!==$user->id)
                 @if($user->followers->contains(\Illuminate\Support\Facades\Auth::user()))
                     <form action="{{route('unfollow',['id'=>$user->id])}}" method="post">
                         @csrf
-                        <input type="submit" class="unfollowunlike" value="Unfollow"/>
+                        <x-like-unlike-button value="Unfollow"/>
                     </form>
                 @else
                     <form action="{{route('follow',['id'=>$user->id])}}" method="post">
                         @csrf
-                        <input type="submit" class="followlike" value="Follow"/>
+                        <x-like-unlike-button value="Follow"/>
                     </form>
                 @endif
             @else
@@ -36,11 +39,11 @@
             @endif
         @endauth
     </div>
-    <nav class="following-follower-nav">
-        <a href="{{url($user->username)}}" class="hovereffect active">Tweets {{count($user->posts)}}</a>
-        <a href="{{route('followers',['username'=>$user->username])}}" class="hovereffect">Followers {{count($user->followers)}}</a>
-        <a href="{{route('following',['username'=>$user->username])}}" class="hovereffect">Following {{count($user->followings)}}</a>
-        <a href="{{route('likes',['username'=>$user->username])}}" class="hovereffect">Likes {{count($user->likes)}}</a>
+    <nav class="flex flex-row justify-between m-2 ml-0">
+        <x-profile-nav-link href="{{url($user->username)}}" isActive="true" value="Tweets {{count($user->posts)}}"/>
+        <x-profile-nav-link href="{{route('followers',['username'=>$user->username])}}" value="Followers {{count($user->followers)}}"/>
+        <x-profile-nav-link href="{{route('following',['username'=>$user->username])}}" value="Following {{count($user->followings)}}"/>
+        <x-profile-nav-link href="{{route('likes',['username'=>$user->username])}}" value="Likes {{count($user->likes)}}" />
     </nav>
     @if($user->isPrivate && $user->id != \Illuminate\Support\Facades\Auth::id())
         <p>User is private</p>

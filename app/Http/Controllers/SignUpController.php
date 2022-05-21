@@ -22,8 +22,8 @@ class SignUpController extends Controller
         $request['email'] = Str::lower($request['email']);
 
         $validated = $request->validate([
-            'username'=>'required|string|max:255,unique:users',
-            'email'=>'email|required|string|max:255,unique:users',
+            'username'=>'required|string|max:255|unique:users',
+            'email'=>'email|required|string|max:255|unique:users',
             'password'=>['required',Password::default()],
         ]);
 

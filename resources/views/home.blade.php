@@ -3,13 +3,13 @@
 @section('title','Home')
 
 @section('content')
-    <form onclick="document.getElementById('text').focus()" class="tweetform" action="{{route('tweet')}}" method="post">
+    <form onclick="document.getElementById('text').focus()" class="flex flex-row justify-between items-center mb-2" action="{{route('tweet')}}" method="post">
         @csrf
-        <textarea autocomplete="off" id="text" name="content" placeholder="What's Going On"></textarea>
+        <textarea class="border-gray-400 rounded basis-5/6 border-2 p-2" autocomplete="off"  id="text" name="content" placeholder="What's Going On"></textarea>
         @error('content')
         <p style="color: red">{{$message}}</p>
         @enderror
-        <input id="submit" type="submit" />
+        <x-submit-button type="submit" value="Submit"/>
     </form>
     @foreach($posts as $post)
         <x-post :post="$post"/>

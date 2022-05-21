@@ -11,57 +11,36 @@
 <body>
     <div id="root">
         @section('header')
-            <header>
-                <div class="logo-wrapper">
+            <header class="sticky top-0 bg-white flex flex-row pt-0.5 justify-between">
+                <div class="pl-5 basis-1/5 flex">
                     <a href="{{route('home')}}">
-                        <img src="{{url('/images/logo.png')}}" alt="Logo" class="hovereffect"/>
+                        <img src="{{url('/images/logo.png')}}" alt="Logo" class="w-10"/>
                     </a>
                 </div>
-                @if(\Illuminate\Support\Facades\Route::currentRouteName() !== 'home')
-                    <h2 class="sub-title goback">
-                        @auth
-                            <a href="@yield('back_url')">
-                                <img src="{{url('/images/arrow.png')}}" alt="arrow"/>
-                            </a>
-                        @endauth
-                        <span>@yield('title')</span>
-                    </h2>
-                @else
-                    <h2 class="sub-title">@yield('title')</h2>
-                @endif
-                <form action="{{route('search')}}" method="get">
-                    <input type="search" name="search" />
-                    <input autocomplete="off" required type="submit" value="Search" placeholder="Search..."/>
+                <h2 class="basis-1/2 text-2xl font-bold">@yield('title')</h2>
+                <form action="{{route('search')}}" method="get" class="basis-1/4 flex flex-row items-center">
+                    <input type="search" class="border-gray-400 border-2 rounded pt-2 basis-4/5 pb-2 pl-2 mr-2 w-20 outline-0" name="search" autocomplete="off" required placeholder="Search..." />
+                    <x-submit-button class="basis-1/6" type="submit" value="Search"/>
                 </form>
             </header>
         @show
-        <main>
+        <main class="flex flex-row justify-between">
             @section('sidebar')
-                <nav>
+                <nav class="basis-1/5 content-end">
                     @auth
-                        <a href="{{route('home')}}" class="navlink hovereffect with-image">
-                            <img src="{{url('/images/home.png')}}" alt="home logo">
-                            <span>Home</span>
-                        </a>
-                        <a href="{{url('/',\Illuminate\Support\Facades\Auth::user()->username)}}" class="navlink hovereffect with-image">
-                            <img src="{{url('/images/profile.png')}}" alt="profile logo">
-                            <span>Profile</span>
-                        </a>
-                        <a href="{{route('notifications',\Illuminate\Support\Facades\Auth::user()->username)}}" class="navlink hovereffect with-image">
-                            <img src="{{url('/images/profile.png')}}" alt="profile logo">
-                            <span>Notifications</span>
-                        </a>
-                        <a href="{{route('logout')}}" class="navlink hovereffect with-image">
-                            <img src="{{url('/images/logout.png')}}" alt="logout logo">
-                            <span>Log Out</span>
-                        </a>
+                        <div class="fixed">
+                            <x-nav-link href="{{route('home')}}" text="Home"/>
+                            <x-nav-link href="{{route('notifications',['username'=>\Illuminate\Support\Facades\Auth::user()->username])}}" text="Notifications"/>
+                            <x-nav-link href="{{url(\Illuminate\Support\Facades\Auth::user()->username)}}" text="Profile"/>
+                            <x-nav-link href="{{route('logout')}}" text="Logout"/>
+                        </div>
                     @endauth
                 </nav>
             @show
-            <div class="container">
+            <div class="basis-1/2">
                 @yield('content')
             </div>
-            <aside>
+            <aside class="basis-1/4">
 
             </aside>
         </main>
