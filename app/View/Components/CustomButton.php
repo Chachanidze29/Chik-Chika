@@ -4,16 +4,16 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class LikeUnlikeButton extends Component
+class CustomButton extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(public string $value)
+    public function __construct(public bool $isRed,public string $value)
     {
-
+        //
     }
 
     /**
@@ -23,6 +23,6 @@ class LikeUnlikeButton extends Component
      */
     public function render()
     {
-        return view('components.like-unlike-button');
+        return view('components.custom-button');
     }
 }

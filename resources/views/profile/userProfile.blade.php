@@ -14,12 +14,12 @@
                 @if($user->followers->contains(\Illuminate\Support\Facades\Auth::user()))
                     <form action="{{route('unfollow',['id'=>$user->id])}}" method="post">
                         @csrf
-                        <x-like-unlike-button value="Unfollow"/>
+                        <x-custom-button isRed={{true}} value="Unfollow"/>
                     </form>
                 @else
                     <form action="{{route('follow',['id'=>$user->id])}}" method="post">
                         @csrf
-                        <x-like-unlike-button value="Follow"/>
+                        <x-custom-button isRed={{false}} value="Follow"/>
                     </form>
                 @endif
             @else
@@ -27,12 +27,12 @@
                     @if($user->isPrivate)
                         <form method="post" action="{{route('makePublic',['username'=>$user->username])}}">
                             @csrf
-                            <input type="submit" value="Make Public">
+                            <x-custom-button isRed={{false}} value="Public"/>
                         </form>
                     @else
                         <form method="post" action="{{route('makePrivate',['username'=>$user->username])}}">
                             @csrf
-                            <input type="submit" value="Make Private">
+                            <x-custom-button isRed={{true}} value="Private"/>
                         </form>
                     @endif
                 @endauth

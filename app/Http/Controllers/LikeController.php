@@ -16,7 +16,7 @@ class LikeController extends Controller
 
     public function like(int $id) {
         $post = $this->postService->getPostById($id);
-        $user = User::find(Auth::id());
+        $user = $this->userService->getUserById(Auth::id());
         $user->likes()->attach($post);
 
         event(new LikedEvent($post,$user));
@@ -26,7 +26,7 @@ class LikeController extends Controller
 
     public function unlike(int $id) {
         $post = $this->postService->getPostById($id);
-        $user = User::find(Auth::id());
+        $user = $this->userService->getUserById(Auth::id());
         $user->likes()->detach($post);
 
         return redirect()->back();

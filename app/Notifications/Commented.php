@@ -43,8 +43,10 @@ class Commented extends Notification
 //        commentRoute using $this->commentId
         return [
             'username'=>$this->username,
-            'text'=>'Has Wrote A Comment On Your',
-            'postRoute'=>route('post',$this->postId)
+            'text1'=>'Has Wrote ',
+            'text2'=>'A On Your ',
+            'postRoute'=>route('post',$this->postId),
+            'commentRoute'=>route('post',$this->commentId)
         ];
     }
 }

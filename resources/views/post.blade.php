@@ -18,12 +18,12 @@
                 @if($post->likedBy->contains(\Illuminate\Support\Facades\Auth::id()))
                     <form action="{{route('unlike',['id'=>$post->id])}}" method="post">
                         @csrf
-                        <x-like-unlike-button type="submit" value="Unlike {{count($post->likedBy)}}"/>
+                        <x-custom-button isRed={{true}} value="Unlike {{count($post->likedBy)}}"/>
                     </form>
                 @else
                     <form action="{{route('like',['id'=>$post->id])}}" method="post">
                         @csrf
-                        <x-like-unlike-button type="submit" value="Like {{count($post->likedBy)}}"/>
+                        <x-custom-button isRed={{false}} value="Like {{count($post->likedBy)}}"/>
                     </form>
                 @endif
             @endauth

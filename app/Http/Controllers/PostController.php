@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Services\PostService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,7 @@ class PostController extends Controller
 {
     public function __construct(
         protected PostService $postService,
+        protected UserService $userService
     ){}
 
     public function index(int $id) {
@@ -33,8 +35,7 @@ class PostController extends Controller
             'content' => 'required|string|max:140'
         ]);
 
-        $user = User::find(Auth::id());
-
+        $user = $this->userService->getUserById(Auth::id());
         $post = Post::create([
             'content' => $validated['content'],
             'user_id' => $user->id
@@ -50,10 +51,8 @@ class PostController extends Controller
             'content' => 'required|string|max:140'
         ]);
 
-        $user = User::find(Auth::id());
-
+        $user = $this->userService->getUserById(Auth::id());
         $post = $this->postService->getPostById($id);
-
         $comment = Post::create([
             'content' => $validated['content'],
             'user_id' => $user->id,
