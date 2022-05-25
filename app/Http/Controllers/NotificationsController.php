@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\UserService;
-use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
 {
@@ -11,8 +10,22 @@ class NotificationsController extends Controller
 
     public function index(string $username) {
         $user = $this->userService->getUserByUserName($username);
-        return view('profile.notification',[
+        return view('profile.notifications',[
             'notifications'=>$user->notifications
             ]);
+    }
+
+    public function unread_index(string $username) {
+        $user = $this->userService->getUserByUserName($username);
+        return view('profile.notifications',[
+            'notifications'=>$user->unreadNotifications
+        ]);
+    }
+
+    public function showOne(string $username,string $id) {
+        $user = $this->userService->getUserByUserName($username);
+        $notification = $user->notifications->where('id',$id)->first();
+        $notification->markAsRead();
+        return view('profile.notification',['notification'=>$notification]);
     }
 }

@@ -12,7 +12,7 @@
 
     <br/>
 
-    <div class="flex flex-col bg-gray-100 rounded p-2">
+    <div class="flex flex-col bg-gray-200 rounded p-2">
         <object>
             <x-user-link href="{{url('/',[$comment->user->username])}}" value="{{$comment->user->username}}"/>
             <p class="text-lg m-2 ml-0">{{$comment->content}}</p>
@@ -40,6 +40,7 @@
             </form>
         @endauth
     </div>
+    <h1 class="m-2 ml-0 font-bold text-2xl">Replies:</h1>
     @foreach($replies as $reply)
         <x-comment :comment="$reply"/>
     @endforeach

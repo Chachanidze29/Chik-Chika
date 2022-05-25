@@ -14,6 +14,8 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
+//Add Like functionality for comments
+
 Route::middleware('auth')->group(function () {
     Route::get('/home',[HomeController::class,'index'])->name('home');
     Route::get('/logout',[LoginController::class,'destroy'])->name('logout');
@@ -27,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/{username}/private',[EditProfileController::class,'makePrivate'])->name('makePrivate');
     Route::post('/{username}/public',[EditProfileController::class,'makePublic'])->name('makePublic');
     Route::get('/{username}/notifications',[NotificationsController::class,'index'])->name('notifications');
+    Route::get('/{username}/notifications/unread',[NotificationsController::class,'unread_index'])->name('unreadNotifications');
+    Route::get('/{username}/notification/{id}',[NotificationsController::class,'showOne'])->name('notification');
 });
 
 Route::middleware('guest')->group(function () {

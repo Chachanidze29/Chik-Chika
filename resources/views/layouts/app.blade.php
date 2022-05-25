@@ -27,21 +27,27 @@
         <main class="flex flex-row justify-between">
             @section('sidebar')
                 <nav class="basis-1/5 content-end">
-                    @auth
-                        <div class="fixed">
-                            <x-nav-link href="{{route('home')}}" text="Home"/>
-                            <x-nav-link href="{{route('notifications',['username'=>\Illuminate\Support\Facades\Auth::user()->username])}}" text="Notifications"/>
-                            <x-nav-link href="{{url(\Illuminate\Support\Facades\Auth::user()->username)}}" text="Profile"/>
-                            <x-nav-link href="{{route('logout')}}" text="Logout"/>
-                        </div>
-                    @endauth
+                    <div class="fixed">
+                        @auth
+                                <x-nav-link href="{{route('home')}}" text="Home"/>
+                                <x-nav-link href="{{route('notifications',['username'=>\Illuminate\Support\Facades\Auth::user()->username])}}" text="Notifications {{count(\Illuminate\Support\Facades\Auth::user()->unreadNotifications)}}"/>
+                                <x-nav-link href="{{url(\Illuminate\Support\Facades\Auth::user()->username)}}" text="Profile"/>
+                                <x-nav-link href="{{route('logout')}}" text="Logout"/>
+                        @endauth
+                        @guest
+                                <x-nav-link href="{{route('login')}}" text="Login"/>
+                                <x-nav-link href="{{route('signup')}}" text="SignUp"/>
+                        @endguest
+                    </div>
                 </nav>
             @show
             <div class="basis-1/2">
                 @yield('content')
             </div>
             <aside class="basis-1/4">
+                @auth
 
+                @endauth
             </aside>
         </main>
     </div>

@@ -4,7 +4,7 @@
 @section('back_url','/home')
 
 @section('content')
-    <div class="flex flex-col bg-gray-100 rounded p-2">
+    <div class="flex flex-col bg-gray-200 rounded p-2">
             <object>
                 <x-user-link href="{{url('/',[$post->user->username])}}" value="{{$post->user->username}}"/>
                 <p class="text-lg m-2 ml-0">{{$post->content}}</p>
@@ -32,6 +32,7 @@
             </form>
         @endauth
     </div>
+    <h1 class="m-2 ml-0 text-2xl font-bold">Comments:</h1>
     @foreach($comments as $comment)
         <x-comment :comment="$comment"/>
     @endforeach

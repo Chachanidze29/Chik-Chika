@@ -1,4 +1,4 @@
-@extends('layouts.app',['username'=>\Illuminate\Support\Facades\Auth::user()->username])
+@extends('layouts.app')
 
 @section('title','Home')
 
