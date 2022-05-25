@@ -9,9 +9,7 @@ class HomeController extends Controller
 {
     public function __construct(
         protected PostService $postService
-    ) {
-
-    }
+    ) {}
 
     public function index() {
         return view('home',[

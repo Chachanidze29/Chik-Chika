@@ -19,6 +19,6 @@
                 </form>
             @endif
         @endauth
-        <a class="border-2 border-red-400 pl-2 pr-2" href="{{url('/post',[$post->id])}}">Comments {{count($post->comments)}}</a>
+        <a class="border-2 border-red-400 pl-2 pr-2" href="{{route('post',[$post->id])}}">Comments {{count($post->comments)}}</a>
     </div>
 </div>

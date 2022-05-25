@@ -4,6 +4,10 @@
 @section('back_url','/home')
 
 @section('content')
+    @if($parent)
+        <x-post :post="$parent"/>
+    @endif
+
     <div class="flex flex-col bg-gray-200 rounded p-2">
             <object>
                 <x-user-link href="{{url('/',[$post->user->username])}}" value="{{$post->user->username}}"/>
@@ -34,6 +38,6 @@
     </div>
     <h1 class="m-2 ml-0 text-2xl font-bold">Comments:</h1>
     @foreach($comments as $comment)
-        <x-comment :comment="$comment"/>
+        <x-post :post="$comment"/>
     @endforeach
 @endsection

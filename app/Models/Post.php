@@ -11,7 +11,8 @@ class Post extends Model
 
     protected $fillable = [
         'content',
-        'user_id'
+        'user_id',
+        'parent_id'
     ];
 
     public function user() {
@@ -19,7 +20,7 @@ class Post extends Model
     }
 
     public function comments() {
-        return $this->morphMany(Comment::class,'commentable')->whereNull('parent_id');
+        return $this->hasMany(Post::class,'parent_id','id');
     }
 
     public function likedBy() {
