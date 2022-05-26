@@ -21,4 +21,9 @@ class UserService
     public function getUsersByQuery(string $query) {
         return User::where('username','like',$query.'%')->get();
     }
+
+    public function getUserLikedPosts(string $username) {
+        $user = User::where('username',$username)->first();
+        return $user->likes()->latest()->get();
+    }
 }

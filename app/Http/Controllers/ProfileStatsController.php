@@ -9,9 +9,7 @@ class ProfileStatsController extends Controller
 {
     public function __construct(
         protected UserService $userService
-    )
-    {
-    }
+    ) {}
 
     public function following(string $username) {
         $user = $this->userService->getUserByUserName($username);
@@ -24,7 +22,7 @@ class ProfileStatsController extends Controller
     }
 
     public function likes(string $username) {
-        $user = $this->userService->getUserByUserName($username);
-        return view('profile.likes',['username'=>$username,'likes'=>$user->likes]);
+        $likes = $this->userService->getUserLikedPosts($username);
+        return view('profile.likes',['username'=>$username,'likes'=>$likes]);
     }
 }

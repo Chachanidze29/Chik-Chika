@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ChikChika / @yield('title')</title>
     <link rel="stylesheet" href="/css/app.css">
+    @livewireStyles
 </head>
 <body>
     <div id="root">
@@ -51,5 +52,6 @@
             </aside>
         </main>
     </div>
+    @livewireScripts
 </body>
 </html>

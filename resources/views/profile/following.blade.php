@@ -10,9 +10,14 @@
         <x-profile-nav-link href="{{route('following',['username'=>$username])}}" value="Following {{count($following)}}" isActive="true" />
         <x-profile-nav-link href="{{route('likes',['username'=>$username])}}" value="Likes"/>
     </nav>
-    <div class="user-list">
+    <div class="flex flex-col">
+        <h1 class="text-2xl font-bold m-2 ml-0">Followings:</h1>
+        <ul>
         @foreach($following as $f)
-            <a class="userlink" href="{{url($f->username)}}">{{$f->username}}</a>
+            <li class="m-1 ml-0">
+                <x-user-link href="{{url($f->username)}}" value="{{$f->username}}" />
+            </li>
         @endforeach
+        </ul>
     </div>
 @endsection

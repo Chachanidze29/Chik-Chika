@@ -6,6 +6,7 @@ use App\Providers\RouteServiceProvider;
 use App\Services\PostService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
@@ -15,10 +16,8 @@ class UserProfileController extends Controller
     ){}
 
     public function index(string $username) {
-        $user = $this->userService->getUserByUserName($username);
         return view('profile.userProfile',[
-            'user'=> $user,
-            'posts'=>$this->postService->getPostsByUserName($username)
+            'username'=> $username,
         ]);
     }
 }
