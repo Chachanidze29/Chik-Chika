@@ -1,6 +1,11 @@
 <div>
-    <button wire:click="all" class=" {{$active==='All' ? 'border-gray-400' : 'border-gray-200'}} border-b-2 mr-2 hover:border-gray-400 text-2xl">All</button>
-    <button wire:click="unread" class="{{$active==='Unread' ? 'border-gray-400' : 'border-gray-200'}} border-b-2 hover:border-gray-400 text-2xl">Unread</button>
+    <div class="flex justify-between items-center">
+        <div>
+            <button wire:click="all" class=" {{$active==='All' ? 'border-gray-400' : 'border-gray-200'}} border-b-2 mr-2 hover:border-gray-400 text-2xl">All</button>
+            <button wire:click="unread" class="{{$active==='Unread' ? 'border-gray-400' : 'border-gray-200'}} border-b-2 hover:border-gray-400 text-2xl">Unread</button>
+        </div>
+        <button wire:click="readAll" class="border-2 border-gray-400 p-2 hover:bg-gray-200">Mark All As Read</button>
+    </div>
     @if(count($notifications) > 0)
         @foreach($notifications as $notification)
             <a href="{{route('notification',[

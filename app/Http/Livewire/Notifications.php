@@ -33,6 +33,12 @@ class Notifications extends Component
         $this->active = 'Unread';
     }
 
+    public function readAll() {
+        $this->notificationService = app(NotificationService::class);
+        $this->notifications = $this->notificationService->getNotificationsByUserName($this->username);
+        $this->notifications->markAsRead();
+    }
+
     public function render()
     {
         return view('livewire.notifications');
