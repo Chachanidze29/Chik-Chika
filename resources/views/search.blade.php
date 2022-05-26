@@ -9,7 +9,7 @@
         <ul class="m-5 ml-1">
         @foreach($users as $user)
             <li>
-                <x-user-link href="/{{$user->username}}" value="{{$user->username}}"/>
+                <x-user-profile-link href="/{{$user->username}}" value="{{$user->username}}"/>
             </li>
         @endforeach
         </ul>

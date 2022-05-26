@@ -9,7 +9,7 @@
         @error('content')
         <p style="color: red">{{$message}}</p>
         @enderror
-        <x-submit-button type="submit" value="Submit"/>
+        <x-submit type="submit" value="Submit"/>
     </form>
     @foreach($posts as $post)
         <livewire:post :post="$post"/>

@@ -1,8 +1,8 @@
 <div>
     <div class="flex justify-between items-center">
         <div>
-            <x-notification-button wire:click="all" active="{{$active === 'All'}}" value="All"/>
-            <x-notification-button wire:click="unread" active="{{$active === 'Unread'}}" value="Unread"/>
+            <x-notification-link wire:click="all" active="{{$active === 'All'}}" value="All"/>
+            <x-notification-link wire:click="unread" active="{{$active === 'Unread'}}" value="Unread"/>
         </div>
         <button wire:click="readAll" class="border-2 border-gray-400 p-2 hover:bg-gray-200">Mark All As Read</button>
     </div>

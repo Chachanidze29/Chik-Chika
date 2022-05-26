@@ -9,7 +9,7 @@
     <title>Document</title>
 </head>
 <body>
-    <x-form-container>
+    <x-form-wrapper>
         @csrf
         <x-form-input type="text" name="username" placeholder="Enter UserName"/>
         @error('username')
@@ -25,6 +25,6 @@
         @enderror
         <x-submit-button type="submit" value="Submit" />
         <p>Already have an account? <a href="{{route('login')}}" class="font-bold border-b-2 hover:border-gray-400">Log In</a></p>
-    </x-form-container>
+    </x-form-wrapper>
 </body>
 </html>

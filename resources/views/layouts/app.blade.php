@@ -21,7 +21,7 @@
                 <h2 class="basis-1/2 text-2xl font-bold">@yield('title')</h2>
                 <form action="{{route('search')}}" method="get" class="basis-1/4 flex flex-row items-center">
                     <input type="search" class="border-gray-400 border-2 rounded pt-2 basis-4/5 pb-2 pl-2 mr-2 w-20 outline-0" name="search" autocomplete="off" required placeholder="Search..." />
-                    <x-submit-button class="basis-1/6" type="submit" value="Search"/>
+                    <x-submit class="basis-1/6" type="submit" value="Search"/>
                 </form>
             </header>
         @show
@@ -30,14 +30,14 @@
                 <nav class="basis-1/5 content-end">
                     <div class="fixed">
                         @auth
-                                <x-nav-link href="{{route('home')}}" text="Home"/>
-                                <x-nav-link href="{{route('notifications',['username'=>\Illuminate\Support\Facades\Auth::user()->username])}}" text="Notifications {{count(\Illuminate\Support\Facades\Auth::user()->unreadNotifications)}}"/>
-                                <x-nav-link href="{{url(\Illuminate\Support\Facades\Auth::user()->username)}}" text="Profile"/>
-                                <x-nav-link href="{{route('logout')}}" text="Logout"/>
+                                <x-link href="{{route('home')}}" text="Home"/>
+                                <x-link href="{{route('notifications',['username'=>\Illuminate\Support\Facades\Auth::user()->username])}}" text="Notifications {{count(\Illuminate\Support\Facades\Auth::user()->unreadNotifications)}}"/>
+                                <x-link href="{{url(\Illuminate\Support\Facades\Auth::user()->username)}}" text="Profile"/>
+                                <x-link href="{{route('logout')}}" text="Logout"/>
                         @endauth
                         @guest
-                                <x-nav-link href="{{route('login')}}" text="Login"/>
-                                <x-nav-link href="{{route('signup')}}" text="SignUp"/>
+                                <x-link href="{{route('login')}}" text="Login"/>
+                                <x-link href="{{route('signup')}}" text="SignUp"/>
                         @endguest
                     </div>
                 </nav>

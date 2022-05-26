@@ -9,7 +9,7 @@
     <title>Document</title>
 </head>
 <body>
-    <x-form-container>
+    <x-form-wrapper>
         @csrf
         <x-form-input type="text" name="email" placeholder="Enter Email"/>
         @error('email')
@@ -21,6 +21,6 @@
         @enderror
         <x-submit-button type="submit" value="Submit" />
         <p>Don't have an account? <a href="{{route('signup')}}" class="font-bold border-b-2 hover:border-gray-400">Sign Up</a></p>
-    </x-form-container>
+    </x-form-wrapper>
 </body>
 </html>
