@@ -5,7 +5,7 @@
 
 @section('content')
     @if($parent)
-        <x-post :post="$parent"/>
+        <livewire:post :post="$parent"/>
     @endif
 
     <div class="flex flex-col bg-gray-200 rounded p-2">
@@ -20,11 +20,13 @@
                         @csrf
                         <x-custom-button isRed={{true}} value="Unlike {{count($post->likedBy)}}"/>
                     </form>
+{{--                    <button wire:click="like">Like</button>--}}
                 @else
                     <form action="{{route('like',['id'=>$post->id])}}" method="post">
                         @csrf
                         <x-custom-button isRed={{false}} value="Like {{count($post->likedBy)}}"/>
                     </form>
+{{--                    <button wire:click="unlike">Unlike</button>--}}
                 @endif
             @endauth
         </div>
@@ -38,6 +40,6 @@
     </div>
     <h1 class="m-2 ml-0 text-2xl font-bold">Comments:</h1>
     @foreach($comments as $comment)
-        <x-post :post="$comment"/>
+        <livewire:post :post="$comment"/>
     @endforeach
 @endsection

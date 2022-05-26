@@ -12,7 +12,7 @@
     </nav>
     <div class="user-list">
         @foreach($likes as $post)
-            <x-post :post="$post"/>
+            <livewire:post :post="$post"/>
         @endforeach
     </div>
 @endsection

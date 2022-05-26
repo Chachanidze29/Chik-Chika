@@ -2,13 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Events\FollowedEvent;
-use App\Events\UnfollowedEvent;
-use App\Models\Post;
 use App\Models\User;
 use App\Services\PostService;
 use App\Services\UserService;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class UserProfile extends Component
@@ -20,6 +16,7 @@ class UserProfile extends Component
     public User $authUser;
     public $posts;
     public string $username;
+    public $users;
 
     public function mount(string $username) {
         $this->userService = app(UserService::class);
@@ -27,8 +24,19 @@ class UserProfile extends Component
 
         $this->username = $username;
         $this->user = $this->userService->getUserByUserName($this->username);
-        $this->authUser = $this->userService->getUserById(Auth::id());
         $this->posts = $this->postService->getPostsByUserName($this->username);
+    }
+
+    public function followers() {
+        $this->users = $this->user->followers;
+    }
+
+    public function followings() {
+        $this->users = $this->user->followings;
+    }
+
+    public function likes() {
+        $this->posts = $this->user->likes;
     }
 
     public function render()

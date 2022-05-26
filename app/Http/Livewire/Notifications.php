@@ -13,11 +13,10 @@ class Notifications extends Component
     public string $username;
     public string $active;
 
-    public function mount(string $username) {
+    public function mount(NotificationService $notificationService,string $username) {
         $this->username = $username;
 
-        $this->notificationService = app(NotificationService::class);
-        $this->notifications = $this->notificationService->getNotificationsByUserName($username);
+        $this->notifications = $notificationService->getNotificationsByUserName($username);
         $this->active = 'All';
     }
 

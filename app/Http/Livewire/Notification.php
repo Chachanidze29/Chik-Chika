@@ -13,11 +13,11 @@ class Notification extends Component
     public string $notificationId;
     public $notification;
 
-    public function mount(string $username,string $notificationId) {
+    public function mount(NotificationService $notificationService,string $username,string $notificationId) {
         $this->username = $username;
         $this->notificationId = $notificationId;
+        $this->notificationService = $notificationService;
 
-        $this->notificationService = app(NotificationService::class);
         $this->notification = $this->notificationService->getNotificationByUsernameAndId($this->username,$this->notificationId);
         $this->notification->markAsRead();
     }

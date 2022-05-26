@@ -12,6 +12,6 @@
         <x-submit-button type="submit" value="Submit"/>
     </form>
     @foreach($posts as $post)
-        <x-post :post="$post"/>
+        <livewire:post :post="$post"/>
     @endforeach
 @endsection

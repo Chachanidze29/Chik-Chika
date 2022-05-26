@@ -4,18 +4,15 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Post extends Component
+class NotificationButton extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public $post;
+    public string $active;
+    public string $value;
 
-    public function __construct(\App\Models\Post $post)
+    public function __construct(string $active,string $value)
     {
-        $this->post = $post;
+        $this->active = $active;
+        $this->value = $value;
     }
 
     /**
@@ -25,6 +22,6 @@ class Post extends Component
      */
     public function render()
     {
-        return view('components.post');
+        return view('components.notification-button');
     }
 }
