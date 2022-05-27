@@ -42,7 +42,7 @@
                     </div>
                 </nav>
             @show
-            <div class="basis-1/2">
+            <div class="basis-1/2 max-w-2xl">
                 @yield('content')
             </div>
             <aside class="basis-1/4">

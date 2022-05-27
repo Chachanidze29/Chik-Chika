@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Jobs\SendAggregatedInfo;
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,6 +18,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        foreach (User::all() as $user) {
+            $schedule->job(new SendAggregatedInfo($user))->weekly();
+        }
     }
 
     /**

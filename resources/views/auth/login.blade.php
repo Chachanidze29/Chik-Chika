@@ -11,15 +11,15 @@
 <body>
     <x-form-wrapper>
         @csrf
-        <x-form-input type="text" name="email" placeholder="Enter Email"/>
+        <x-custom-input type="text" name="email" placeholder="Enter Email"/>
         @error('email')
         <p style="color: red">{{$message}}</p>
         @enderror
-        <x-form-input type="password" name="password" placeholder="Enter Password" />
+        <x-custom-input type="password" name="password" placeholder="Enter Password" />
         @error('password')
         <p style="color: red">{{$message}}</p>
         @enderror
-        <x-submit-button type="submit" value="Submit" />
+        <x-submit type="submit" value="Submit" />
         <p>Don't have an account? <a href="{{route('signup')}}" class="font-bold border-b-2 hover:border-gray-400">Sign Up</a></p>
     </x-form-wrapper>
 </body>
