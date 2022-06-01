@@ -29,11 +29,10 @@ class UserService
 
     public function getUsersToConnect() {
         $authUser = User::find(Auth::id());
-        $users = User::all();
 
-        $returnValue = $users->filter(function ($user) use ($authUser) {
-            return !$user->followers->contains($authUser) && $user->id !== $authUser->id;
+        $users = User::all()->filter(function ($user) use ($authUser) {
+            return !$user->followers->contains($authUser) && $user->id !== $authUser->id && !$user->isPrivate;
         });
-        return $returnValue;
+        return $users;
     }
 }

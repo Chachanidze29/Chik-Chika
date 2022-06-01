@@ -17,7 +17,7 @@ class SendAggregatedInfo implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public User $user){}
+    public function __construct(){}
 
     /**
      * Execute the job.
@@ -26,24 +26,10 @@ class SendAggregatedInfo implements ShouldQueue
      */
     public function handle()
     {
-        $lastWeekDate = Carbon::now()->subDays(Carbon::now()->dayOfWeek)->subWeek()->toDateTimeString();
+        $users = User::all();
 
-        $followings = DB::table('follower_user')
-            ->where('user_id',$this->user->id)
-            ->where('created_at','>',$lastWeekDate)
-            ->count();
-
-        $followers = DB::table('follower_user')
-            ->where('follower_id',$this->user->id)
-            ->where('created_at','>',$lastWeekDate)
-            ->count();
-
-        $data = [
-            'followers'=>$followers,
-            'followings'=>$followings,
-            'username'=>$this->user->username
-        ];
-
-        Mail::to($this->user)->send(new SendAggregatedInfoMail($data));
+        foreach ($users as $user) {
+            SendAggregatedIntoToUser::dispatch($user);
+        }
     }
 }

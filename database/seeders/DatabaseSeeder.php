@@ -31,6 +31,10 @@ const categories = [
         'id'=>6,
         'name'=>'anime'
     ],
+    [
+        'id'=>7,
+        'name'=>'books'
+    ]
 ];
 
 class DatabaseSeeder extends Seeder

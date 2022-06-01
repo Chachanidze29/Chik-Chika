@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\isNull;
 
 class PostService
@@ -20,12 +21,21 @@ class PostService
         })->latest()->get();
     }
 
+    public function getPostsByCategoryName(string $category_name) {
+        $posts = Post::whereHas('category',function ($q) use ($category_name) {
+            $q->where('name',$category_name);
+        })->whereHas('user',function ($q) {
+            $q->where('isPrivate',false)->orWhere('user_id',Auth::id());
+        })->latest()->get();
+
+        return $posts;
+    }
+
     public function getPostById(?int $id) {
         if(!$id) {
             return null;
         }
-        $post = Post::find($id);
-        return $post;
+        return Post::find($id);
     }
 
     public function getCommentsByPostId(int $id) {

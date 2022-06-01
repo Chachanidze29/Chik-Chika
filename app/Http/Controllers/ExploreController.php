@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Services\PostService;
 
 class ExploreController extends Controller
 {
+    public function __construct(public PostService $postService){}
+
     public function index(string $category_name) {
-        $posts = Post::whereHas('category',function ($q) use ($category_name) {
-            $q->where('name',$category_name);
-        })->latest()->get();
+        $posts = $this->postService->getPostsByCategoryName($category_name);
 
         return view('explore',[
             'posts'=>$posts,

@@ -17,9 +17,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        foreach (User::all() as $user) {
-            $schedule->job(new SendAggregatedInfo($user))->weekly();
-        }
+
+        $schedule->job(new SendAggregatedInfo())->weekly();
+
     }
 
     /**

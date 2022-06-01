@@ -21,12 +21,12 @@
                 @if($user->isPrivate)
                     <form method="post" action="{{route('makePublic',['username'=>$user->username])}}">
                         @csrf
-                        <x-my-button value="Public"/>
+                        <x-my-button value="Make Public"/>
                     </form>
                 @else
                     <form method="post" action="{{route('makePrivate',['username'=>$user->username])}}">
                         @csrf
-                        <x-my-button :isRed="true" value="Private"/>
+                        <x-my-button :isRed="true" value="Make Private"/>
                     </form>
                 @endif
             @endauth
