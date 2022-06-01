@@ -12,12 +12,14 @@ use App\Services\PostService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Misd\Linkify\Linkify;
 
 class PostController extends Controller
 {
     public function __construct(
         protected PostService $postService,
-        protected UserService $userService
+        protected UserService $userService,
+        protected Linkify $linkify
     ){}
 
     public function index(int $id) {
@@ -38,8 +40,9 @@ class PostController extends Controller
         ]);
         $user = $this->userService->getUserById(Auth::id());
         $category_id = Category::where('name',strtolower($validated['category_name']))->first()->id;
+
         $post = Post::create([
-            'content' => $validated['content'],
+            'content' => $this->linkify->processUrls($validated['content'],array('attr'=>array('class'=>'link'))),
             'user_id' => $user->id,
             'category_id'=>$category_id
         ]);
@@ -57,7 +60,7 @@ class PostController extends Controller
         $user = $this->userService->getUserById(Auth::id());
         $post = $this->postService->getPostById($id);
         $comment = Post::create([
-            'content' => $validated['content'],
+            'content' => $this->linkify->processUrls($validated['content']),
             'user_id' => $user->id,
             'parent_id'=>$post->id
         ]);

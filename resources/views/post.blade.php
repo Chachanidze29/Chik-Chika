@@ -11,7 +11,7 @@
     <div class="flex flex-col bg-gray-200 rounded p-2">
             <object>
                 <x-user-profile-link href="{{url('/',[$post->user->username])}}" value="{{$post->user->username}}"/>
-                <p class="text-lg m-2 ml-0">{{$post->content}}</p>
+                <p class="text-lg m-2 ml-0">{!! $post->content !!}</p>
             </object>
         <div class="flex items-center justify-center">
             @auth

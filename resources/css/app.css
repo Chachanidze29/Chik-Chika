@@ -21,3 +21,11 @@ body{
 textarea {
     resize: none;
 }
+
+.link {
+    color: blue;
+}
+
+.link:hover {
+    border-bottom: 2px solid blue;
+}

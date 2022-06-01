@@ -2,7 +2,7 @@
     <a href="{{url('/post',[$post->id])}}">
         <object>
             <x-user-profile-link href="{{url('/',[$post->user->username])}}" value="{{$post->user->username}}"/>
-            <p class="text-lg m-2 ml-0 break-words">{{$post->content}}</p>
+            <p class="text-lg m-2 ml-0 break-words">{!! $post->content !!}</p>
         </object>
     </a>
     <div class="flex flex-row items-center justify-around">

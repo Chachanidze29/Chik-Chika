@@ -23,10 +23,7 @@ class SendAggregatedIntoToUser implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public User $user)
-    {
-        //
-    }
+    public function __construct(public User $user){}
 
     /**
      * Execute the job.
