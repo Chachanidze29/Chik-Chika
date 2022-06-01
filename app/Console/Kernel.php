@@ -17,7 +17,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
         foreach (User::all() as $user) {
             $schedule->job(new SendAggregatedInfo($user))->weekly();
         }

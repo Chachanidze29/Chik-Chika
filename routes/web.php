@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EditProfileController;
+use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
@@ -29,9 +30,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', function () {return view('welcome');});
     Route::get('/login',[LoginController::class,'index'])->name('login');
     Route::post('/login',[LoginController::class,'authenticate']);
     Route::get('/signup',[SignUpController::class,'index'])->name('signup');
@@ -46,6 +45,8 @@ Route::middleware('isPrivate')->group(function () {
     });
 });
 
+Route::get('/explore/{category_name}',[ExploreController::class,'index'])->name('explore');
 Route::get('/post/{id}',[PostController::class,'index'])->whereNumber('id')->name('post');
 Route::get('/search',[SearchController::class,'index'])->name('search');
 Route::get('/{username}',[UserProfileController::class,'index'])->middleware('checkIfExists');
+

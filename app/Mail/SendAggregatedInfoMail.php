@@ -11,12 +11,7 @@ class SendAggregatedInfoMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
-
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
+    public function __construct(public array $data){}
 
     /**
      * Build the message.

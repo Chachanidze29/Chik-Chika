@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\CommentedEvent;
 use App\Events\TweetedEvent;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -21,8 +22,8 @@ class PostController extends Controller
 
     public function index(int $id) {
         $post = $this->postService->getPostById($id);
-        $comments = $this->postService->getCommentsByPostId($id);
         $parent = $this->postService->getPostById($post->parent_id);
+        $comments = $this->postService->getCommentsByPostId($id);
         return view('post',[
             'post'=>$post,
             'comments'=>$comments,
@@ -32,13 +33,15 @@ class PostController extends Controller
 
     public function store(Request $request) {
         $validated = $request->validate([
-            'content' => 'required|string|max:140'
+            'content' => 'required|string|max:140',
+            'category_name'=>'required'
         ]);
-
         $user = $this->userService->getUserById(Auth::id());
+        $category_id = Category::where('name',strtolower($validated['category_name']))->first()->id;
         $post = Post::create([
             'content' => $validated['content'],
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'category_id'=>$category_id
         ]);
 
         event(new TweetedEvent($user,$post->id));

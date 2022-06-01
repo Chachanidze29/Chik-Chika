@@ -15,7 +15,7 @@
             </object>
         <div class="flex items-center justify-center">
             @auth
-                @if($post->likedBy->contains(\Illuminate\Support\Facades\Auth::id()))
+                @if($post->likedBy->contains(auth()->id()))
                     <form action="{{route('unlike',['id'=>$post->id])}}" method="post">
                         @csrf
                         <x-my-button :isRed="true" value="Unlike {{count($post->likedBy)}}"/>
@@ -33,7 +33,12 @@
         @auth
             <form class="flex mt-4 pt-2 border-t-2 flex-row justify-between items-center" method="post" action="{{route('comment',['id'=>$post->id])}}">
                 @csrf
-                <textarea placeholder="Reply..." class="basis-4/5 p-2" name="content"></textarea>
+                <div class="flex flex-col items-stretch basis-4/5 justify-between">
+                    <textarea placeholder="Reply..." class="basis-4/5 p-2" name="content"></textarea>
+                    @error('content')
+                    <p class="m-2 ml-0 text-red-600">{{$message}}</p>
+                    @enderror
+                </div>
                 <x-submit type="submit" value="Submit"/>
             </form>
         @endauth

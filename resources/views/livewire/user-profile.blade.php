@@ -5,7 +5,7 @@
     </div>
     @auth
         @if(\Illuminate\Support\Facades\Auth::id()!==$user->id)
-            @if($user->followers->contains(\Illuminate\Support\Facades\Auth::user()))
+            @if($user->followers->contains(auth()->user()))
                 <form action="{{route('unfollow',['id'=>$user->id])}}" method="post">
                     @csrf
                     <x-my-button :isRed="true" value="Unfollow"/>
@@ -41,7 +41,7 @@
         <x-profile-link href="{{route('following',['username'=>$user->username])}}" value="Following {{count($user->followings)}}"/>
         <x-profile-link href="{{route('likes',['username'=>$user->username])}}" value="Likes {{count($user->likes)}}" />
     </nav>
-    @if($user->isPrivate && $user->id != \Illuminate\Support\Facades\Auth::id() && !$user->followers->contains(\Illuminate\Support\Facades\Auth::id()))
+    @if($user->isPrivate && $user->id != \Illuminate\Support\Facades\Auth::id() && !$user->followers->contains(auth()->id()))
         <p>User is private</p>
     @else
         @if(!empty($users))

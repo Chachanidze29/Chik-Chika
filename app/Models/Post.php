@@ -12,7 +12,8 @@ class Post extends Model
     protected $fillable = [
         'content',
         'user_id',
-        'parent_id'
+        'parent_id',
+        'category_id'
     ];
 
     public function user() {
@@ -25,5 +26,9 @@ class Post extends Model
 
     public function likedBy() {
         return $this->belongsToMany(User::class,'likes','user_id','post_id')->withTimestamps();
+    }
+
+    public function category() {
+        return $this->belongsTo(Category::class);
     }
 }

@@ -34,8 +34,9 @@ class Notifications extends Component
 
     public function readAll() {
         $this->notificationService = app(NotificationService::class);
-        $this->notifications = $this->notificationService->getNotificationsByUserName($this->username);
+        $this->notifications = $this->notificationService->getUnreadNotificationsByUserName($this->username);
         $this->notifications->markAsRead();
+        $this->active = 'Unread';
     }
 
     public function render()
