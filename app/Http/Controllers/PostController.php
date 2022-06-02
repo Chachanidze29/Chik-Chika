@@ -42,7 +42,7 @@ class PostController extends Controller
         $category_id = Category::where('name',strtolower($validated['category_name']))->first()->id;
 
         $post = Post::create([
-            'content' => $this->linkify->processUrls($validated['content'],array('attr'=>array('class'=>'link'))),
+            'content' => $this->linkify->processUrls($validated['content'],array('attr'=>array('class'=>'link','target'=>'_blank'))),
             'user_id' => $user->id,
             'category_id'=>$category_id
         ]);
@@ -60,7 +60,7 @@ class PostController extends Controller
         $user = $this->userService->getUserById(Auth::id());
         $post = $this->postService->getPostById($id);
         $comment = Post::create([
-            'content' => $this->linkify->processUrls($validated['content']),
+            'content' => $this->linkify->processUrls($validated['content'],array('attr'=>array('class'=>'link','target'=>'_blank'))),
             'user_id' => $user->id,
             'parent_id'=>$post->id
         ]);
