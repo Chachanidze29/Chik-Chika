@@ -65,7 +65,7 @@ class PostController extends Controller
             'parent_id'=>$post->id
         ]);
 
-        event(new CommentedEvent($user,$post->id,$comment->id));
+        event(new CommentedEvent($post->user,$post->id,$comment->id));
 
         return redirect()->back();
     }

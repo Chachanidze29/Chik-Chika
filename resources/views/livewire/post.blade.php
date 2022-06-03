@@ -8,11 +8,13 @@
     <div class="flex flex-row items-center justify-around">
         @auth
             @if($post->likedBy->contains(\Illuminate\Support\Facades\Auth::id()))
+{{--                <x-my-button wire:click="unlike" :isRed="true" value="Unlike {{count($post->likedBy)}}" />--}}
                 <form action="{{route('unlike',['id'=>$post->id])}}" method="post">
                     @csrf
                     <x-my-button :isRed="true" value="Unlike {{count($post->likedBy)}}" />
                 </form>
             @else
+{{--                <x-my-button wire:click="like" value="Like {{count($post->likedBy)}}" />--}}
                 <form action="{{route('like',['id'=>$post->id])}}" method="post">
                     @csrf
                     <x-my-button value="Like {{count($post->likedBy)}}" />

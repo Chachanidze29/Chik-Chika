@@ -14,6 +14,9 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
+// How to make livewire layouts
+// Check out post like and unlike functionality with livewire
+// How to add middlewares on livewire methods (For example only authorised user can like or create post)
 Route::middleware('auth')->group(function () {
     Route::get('/home',[HomeController::class,'index'])->name('home');
     Route::get('/logout',[LoginController::class,'destroy'])->name('logout');
@@ -30,7 +33,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', function () {return view('welcome');});
+    Route::view('/','welcome');
     Route::get('/login',[LoginController::class,'index'])->name('login');
     Route::post('/login',[LoginController::class,'authenticate']);
     Route::get('/signup',[SignUpController::class,'index'])->name('signup');
@@ -49,4 +52,3 @@ Route::get('/explore/{category_name}',[ExploreController::class,'index'])->name(
 Route::get('/post/{id}',[PostController::class,'index'])->whereNumber('id')->name('post');
 Route::get('/search',[SearchController::class,'index'])->name('search');
 Route::get('/{username}',[UserProfileController::class,'index'])->middleware('checkIfExists');
-

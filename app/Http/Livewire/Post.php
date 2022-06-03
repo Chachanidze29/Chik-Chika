@@ -13,6 +13,15 @@ class Post extends Component
     public PostModel $post;
     private UserService $userService;
 
+    protected $listeners = [
+        'postLiked'=>'likeUnlikeListener',
+        'postUnliked'=>'likeUnlikeListener'
+    ];
+
+    public function likeUnlikeListener($postId) {
+        $this->post = \App\Models\Post::find($postId);
+    }
+
     public function mount(PostModel $post) {
         $this->post = $post;
     }
@@ -24,6 +33,8 @@ class Post extends Component
         $user->likes()->attach($this->post);
 
         event(new LikedEvent($this->post,$user));
+
+        $this->emitSelf('postLiked',$this->post->id);
     }
 
     public function unlike() {
@@ -31,6 +42,8 @@ class Post extends Component
 
         $user = $this->userService->getUserById(Auth::id());
         $user->likes()->detach($this->post);
+
+        $this->emitSelf('postUnliked',$this->post->id);
     }
 
     public function render()
