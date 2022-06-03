@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->group(function (){
-    Route::middleware('auth:sanctum')->group(function (){
+Route::prefix('v1')->group(function () {
+//    Route::middleware('auth:sanctum')->group(function (){
         Route::controller(UserController::class)->group(function () {
             Route::get('/me','user');
             Route::get('me/following','followings');
@@ -32,5 +32,5 @@ Route::prefix('v1')->group(function (){
             Route::get('/tweet/{tweet_id}/like','like');
             Route::get('/tweet/{tweet_id}/unlike','unlike');
         });
-    });
+//    });
 });

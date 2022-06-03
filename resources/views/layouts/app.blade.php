@@ -53,20 +53,20 @@
                             <x-link href="{{route('explore',['category_name'=>$category->name])}}" text="{{ucfirst($category->name)}}" />
                         @endforeach
                     </div>
-                    <div class="bg-gray-100 p-2 mt-2 rounded-xl hover:bg-gray-200">
-                        <h1 class="text-2xl font-bold">Connect:</h1>
-                        @foreach($usersToConnect as $user)
-                            <div class="flex flex-row justify-between items-center">
-                                <x-link href="{{url('/'.$user->username)}}" text="{{$user->username}}"/>
-                                @auth
-                                    <form action="{{route('follow',['id'=>$user->id])}}" method="post">
-                                        @csrf
-                                        <x-my-button value="Follow"/>
-                                    </form>
-                                @endauth
-                            </div>
-                        @endforeach
-                    </div>
+                    @auth
+                        <div class="bg-gray-100 p-2 mt-2 rounded-xl hover:bg-gray-200">
+                                <h1 class="text-2xl font-bold">Connect:</h1>
+                                @foreach($usersToConnect as $user)
+                                    <div class="flex flex-row justify-between items-center">
+                                        <x-link href="{{url('/'.$user->username)}}" text="{{$user->username}}"/>
+                                            <form action="{{route('follow',['id'=>$user->id])}}" method="post">
+                                                @csrf
+                                                <x-my-button value="Follow"/>
+                                            </form>
+                                    </div>
+                                @endforeach
+                        </div>
+                    @endauth
                 </div>
             </aside>
         </main>

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Events\CommentedEvent;
+use App\Events\FollowedEvent;
+use App\Events\LikedEvent;
 use App\Events\TweetedEvent;
+use App\Events\UnfollowedEvent;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
@@ -50,10 +53,27 @@ class PostController extends Controller
     public function storeComment(StoreCommentRequest $request,int $id) {
         $validated = $request->validated();
         $post = $this->postService->getPostById($id);
-
         $comment = $this->postService->createComment($validated['content'],Auth::id(),$id);
 
         event(new CommentedEvent($post->user,$post->id,$comment->id));
+
+        return redirect()->back();
+    }
+
+    public function like(int $id) {
+        $post = $this->postService->getPostById($id);
+        $user = $this->userService->getUserById(Auth::id());
+        $user->likes()->attach($post);
+
+        event(new LikedEvent($post,$user));
+
+        return redirect()->back();
+    }
+
+    public function unlike(int $id) {
+        $post = $this->postService->getPostById($id);
+        $user = $this->userService->getUserById(Auth::id());
+        $user->likes()->detach($post);
 
         return redirect()->back();
     }
