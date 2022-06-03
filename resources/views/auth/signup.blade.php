@@ -9,13 +9,13 @@
     <title>{{env('APP_NAME')}}</title>
 </head>
 <body>
-    <x-form-wrapper>
+    <x-form-wrapper action="{{route('signup.create')}}">
         @csrf
-        <x-custom-input type="text" name="username" placeholder="Enter UserName"/>
+        <x-custom-input type="text" name="username" value="{{old('username')}}" placeholder="Enter UserName"/>
         @error('username')
         <p style="color: red">{{$message}}</p>
         @enderror
-        <x-custom-input type="email" name="email" placeholder="Enter Email"/>
+        <x-custom-input type="email" name="email" value="{{old('email')}}" placeholder="Enter Email"/>
         @error('email')
         <p style="color: red">{{$message}}</p>
         @enderror

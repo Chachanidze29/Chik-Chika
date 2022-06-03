@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Events\CommentedEvent;
 use App\Events\TweetedEvent;
+use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -33,37 +35,23 @@ class PostController extends Controller
         ]);
     }
 
-    public function store(Request $request) {
-        $validated = $request->validate([
-            'content' => 'required|string|max:140',
-            'category_name'=>'required'
-        ]);
-        $user = $this->userService->getUserById(Auth::id());
+    public function store(StorePostRequest $request) {
+        $validated = $request->validated();
         $category_id = Category::where('name',strtolower($validated['category_name']))->first()->id;
+        $user_id = Auth::id();
 
-        $post = Post::create([
-            'content' => $this->linkify->processUrls($validated['content'],array('attr'=>array('class'=>'link','target'=>'_blank'))),
-            'user_id' => $user->id,
-            'category_id'=>$category_id
-        ]);
+        $post = $this->postService->createPost($validated['content'],$user_id,$category_id);
 
-        event(new TweetedEvent($user,$post->id));
+        event(new TweetedEvent($user_id,$post->id));
 
         return redirect(RouteServiceProvider::HOME);
     }
 
-    public function storeComment(Request $request,int $id) {
-        $validated = $request->validate([
-            'content' => 'required|string|max:140'
-        ]);
-
-        $user = $this->userService->getUserById(Auth::id());
+    public function storeComment(StoreCommentRequest $request,int $id) {
+        $validated = $request->validated();
         $post = $this->postService->getPostById($id);
-        $comment = Post::create([
-            'content' => $this->linkify->processUrls($validated['content'],array('attr'=>array('class'=>'link','target'=>'_blank'))),
-            'user_id' => $user->id,
-            'parent_id'=>$post->id
-        ]);
+
+        $comment = $this->postService->createComment($validated['content'],Auth::id(),$id);
 
         event(new CommentedEvent($post->user,$post->id,$comment->id));
 

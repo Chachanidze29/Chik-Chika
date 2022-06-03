@@ -21,7 +21,7 @@ class TweetedEvent
      * @return void
      */
 
-    public function __construct(public User $user,public int $postId)
+    public function __construct(public int $user_id,public int $postId)
     {
     }
 

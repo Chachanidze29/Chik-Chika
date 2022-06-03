@@ -11,6 +11,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileStatsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,14 +31,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/{username}/public',[EditProfileController::class,'makePublic'])->name('makePublic');
     Route::get('/{username}/notifications',[NotificationsController::class,'index'])->name('notifications');
     Route::get('/{username}/notification/{id}',[NotificationsController::class,'getOne'])->name('notification');
+
+    Route::get('/token/create',[TokenController::class,'index'])->name('token.show');
+    Route::post('/token/create',[TokenController::class,'store'])->name('token.store');
+    Route::post('/token/delete/{token}',[TokenController::class,'delete'])->name('token.delete');
 });
 
 Route::middleware('guest')->group(function () {
     Route::view('/','welcome');
     Route::get('/login',[LoginController::class,'index'])->name('login');
-    Route::post('/login',[LoginController::class,'authenticate']);
+    Route::post('/login',[LoginController::class,'authenticate'])->name('login.create');
     Route::get('/signup',[SignUpController::class,'index'])->name('signup');
-    Route::post('/signup',[SignUpController::class,'store']);
+    Route::post('/signup',[SignUpController::class,'store'])->name('signup.create');
 });
 
 Route::middleware('isPrivate')->group(function () {

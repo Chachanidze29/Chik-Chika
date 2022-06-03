@@ -9,9 +9,9 @@
     <title>{{env('APP_NAME')}}</title>
 </head>
 <body>
-    <x-form-wrapper>
+    <x-form-wrapper action="{{route('login.create')}}">
         @csrf
-        <x-custom-input type="text" name="email" placeholder="Enter Email"/>
+        <x-custom-input type="text" name="email" value="{{old('email')}}" placeholder="Enter Email"/>
         @error('email')
         <p style="color: red">{{$message}}</p>
         @enderror

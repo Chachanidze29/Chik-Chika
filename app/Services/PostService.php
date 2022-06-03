@@ -5,10 +5,13 @@ namespace App\Services;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Misd\Linkify\Linkify;
 use function PHPUnit\Framework\isNull;
 
 class PostService
 {
+    public function __construct(protected Linkify $linkify){}
+
     public function getFeed(User $user) {
         $userIds = $user->followings()->pluck('id');
         $userIds[] = $user->id;
@@ -19,6 +22,26 @@ class PostService
         return Post::whereHas('user',function ($q) use($username) {
             $q->where('username',$username);
         })->latest()->get();
+    }
+
+    public function createPost(string $content,int $userid,int $categoryId){
+        $post = Post::create([
+            'content' => $this->linkify->processUrls($content,array('attr'=>array('class'=>'link','target'=>'_blank'))),
+            'user_id' => $userid,
+            'category_id'=>$categoryId
+        ]);
+
+        return $post;
+    }
+
+    public function createComment(string $content,int $userid,int $parentId) {
+        $comment = Post::create([
+            'content' => $this->linkify->processUrls($content,array('attr'=>array('class'=>'link','target'=>'_blank'))),
+            'user_id' => $userid,
+            'parent_id'=>$parentId
+        ]);
+
+        return $comment;
     }
 
     public function getPostsByCategoryName(string $category_name) {
