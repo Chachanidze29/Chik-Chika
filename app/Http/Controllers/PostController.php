@@ -24,7 +24,6 @@ class PostController extends Controller
     public function __construct(
         protected PostService $postService,
         protected UserService $userService,
-        protected Linkify $linkify
     ){}
 
     public function index(int $id) {

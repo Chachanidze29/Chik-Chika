@@ -6,7 +6,7 @@
     <form onclick="document.getElementById('text').focus()" class="flex relative flex-row justify-between items-center mb-2" action="{{route('tweet')}}" method="post">
         @csrf
         <div class="relative basis-5/6">
-            <textarea class="border-gray-400 rounded w-full border-2 p-2 pr-48" autocomplete="off"  id="text" name="content" placeholder="What's Going On"></textarea>
+            <textarea class="border-gray-400 rounded w-full border-2 p-2 pr-48" autocomplete="off"  id="text" name="content" placeholder="What's Going On">{{old('content')}}</textarea>
             <select name="category_name" class="absolute right-2 top-2 text-center p-2 pl-0 outline-0 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer">
                 <option disabled selected value> -- select an category -- </option>
                 @foreach(\Illuminate\Support\Facades\DB::table('categories')->get() as $category)
@@ -27,4 +27,7 @@
     @foreach($posts as $post)
         <livewire:post :post="$post"/>
     @endforeach
+    <div class="m-5 text-2xl">
+        {{$posts->links()}}
+    </div>
 @endsection

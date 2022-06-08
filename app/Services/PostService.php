@@ -15,7 +15,7 @@ class PostService
     public function getFeed(User $user) {
         $userIds = $user->followings()->pluck('id');
         $userIds[] = $user->id;
-        return Post::whereIn('user_id', $userIds)->where('parent_id',null)->latest()->get();
+        return Post::whereIn('user_id', $userIds)->where('parent_id',null)->latest()->paginate(15);
     }
 
     public function getPostsByUserName(string $username) {
@@ -25,40 +25,31 @@ class PostService
     }
 
     public function createPost(string $content,int $userid,int $categoryId){
-        $post = Post::create([
+        return Post::create([
             'content' => $this->linkify->processUrls($content,array('attr'=>array('class'=>'link','target'=>'_blank'))),
             'user_id' => $userid,
             'category_id'=>$categoryId
         ]);
-
-        return $post;
     }
 
     public function createComment(string $content,int $userid,int $parentId) {
-        $comment = Post::create([
+        return Post::create([
             'content' => $this->linkify->processUrls($content,array('attr'=>array('class'=>'link','target'=>'_blank'))),
             'user_id' => $userid,
             'parent_id'=>$parentId
         ]);
-
-        return $comment;
     }
 
     public function getPostsByCategoryName(string $category_name) {
-        $posts = Post::whereHas('category',function ($q) use ($category_name) {
+        return Post::whereHas('category',function ($q) use ($category_name) {
             $q->where('name',$category_name);
         })->whereHas('user',function ($q) {
             $q->where('isPrivate',false)->orWhere('user_id',Auth::id());
         })->latest()->get();
-
-        return $posts;
     }
 
     public function getPostById(?int $id) {
-        if(!$id) {
-            return null;
-        }
-        return Post::find($id);
+        return !$id ? null : Post::find($id);
     }
 
     public function getCommentsByPostId(int $id) {

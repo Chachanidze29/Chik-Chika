@@ -26,9 +26,7 @@ class SendAggregatedInfo implements ShouldQueue
      */
     public function handle()
     {
-        $users = User::all();
-
-        foreach ($users as $user) {
+        foreach (User::all() as $user) {
             SendAggregatedIntoToUser::dispatch($user);
         }
     }

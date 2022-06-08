@@ -12,31 +12,57 @@ class Notifications extends Component
     public $notifications;
     public string $username;
     public string $active;
+    public int $perPage = 15;
+    private $noti;
+
+    protected $listeners = [
+        'loadedMore'=>'get',
+        'activatedAll'=>'get',
+        'activatedUnread'=>'get'
+    ];
 
     public function mount(NotificationService $notificationService,string $username) {
         $this->username = $username;
 
-        $this->notifications = $notificationService->getNotificationsByUserName($username);
+        $this->noti = $notificationService->getNotificationsByUserName($username)->paginate($this->perPage);
+        $this->notifications = collect($this->noti->items());
         $this->active = 'All';
     }
 
-    public function all() {
+    public function get() {
         $this->notificationService = app(NotificationService::class);
-        $this->notifications = $this->notificationService->getNotificationsByUserName($this->username);
-        $this->active = 'All';
-    }
 
-    public function unread() {
-        $this->notificationService = app(NotificationService::class);
-        $this->notifications = $this->notificationService->getUnreadNotificationsByUserName($this->username);
-        $this->active = 'Unread';
+        if($this->active === 'All') {
+            $this->noti = $this->notificationService->getNotificationsByUserName($this->username)->paginate($this->perPage);
+        } else {
+            $this->noti = $this->notificationService->getUnreadNotificationsByUserName($this->username)->paginate($this->perPage);
+        }
+        $this->notifications = collect($this->noti->items());
     }
 
     public function readAll() {
         $this->notificationService = app(NotificationService::class);
-        $this->notifications = $this->notificationService->getUnreadNotificationsByUserName($this->username);
+        $this->notifications = $this->notificationService->getUnreadNotificationsByUserName($this->username)->get();
         $this->notifications->markAsRead();
         $this->active = 'Unread';
+    }
+
+    public function setActiveAll()
+    {
+        $this->active = 'All';
+        $this->emitSelf('activatedAll');
+    }
+
+    public function setActiveUnread()
+    {
+        $this->active = 'Unread';
+        $this->emitSelf('activatedUnread');
+    }
+
+    public function loadMore()
+    {
+        $this->perPage += 15;
+        $this->emitSelf('loadedMore');
     }
 
     public function render()

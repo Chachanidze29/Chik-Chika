@@ -11,11 +11,8 @@ class UserService
         return User::where('username',$userName)->first();
     }
 
-    public function getUserById(int|null $uuid) {
-        if($uuid) {
-            return User::find($uuid);
-        }
-        return null;
+    public function getUserById(?int $uuid) {
+        return !$uuid ? null : User::find($uuid);
     }
 
     public function getUsersByQuery(string $query) {
@@ -30,10 +27,9 @@ class UserService
     public function getUsersToConnect() {
         $authUser = $this->getUserById(Auth::id());
         if($authUser) {
-            $users = User::all()->filter(function ($user) use ($authUser) {
+            return User::all()->filter(function ($user) use ($authUser) {
                 return !$user->followers->contains($authUser) && $user->id !== $authUser->id && !$user->isPrivate;
             });
-            return $users;
         }
         return null;
     }

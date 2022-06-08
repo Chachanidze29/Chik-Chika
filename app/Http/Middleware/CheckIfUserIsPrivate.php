@@ -25,7 +25,7 @@ class CheckIfUserIsPrivate
     {
         $user = $this->userService->getUserByUserName($request->username);
         $authUser = $this->userService->getUserById(Auth::id());
-        if($user->isPrivate && $user->id != $authUser && !$authUser?->followings->contains($user)) {
+        if($user->isPrivate && $user->id != $authUser->id && !$authUser?->followings->contains($user)) {
             return redirect('/'.$user->username);
         }
 

@@ -8,12 +8,12 @@ class NotificationService
 {
     public function getNotificationsByUserName(string $username) {
         $user = User::where('username',$username)->first();
-        return $user->notifications;
+        return $user->notifications();
     }
 
     public function getUnreadNotificationsByUserName(string $username) {
         $user = User::where('username',$username)->first();
-        return $user->unreadNotifications;
+        return $user->unreadNotifications();
     }
 
     public function getNotificationByUsernameAndId(string $username,string $id) {

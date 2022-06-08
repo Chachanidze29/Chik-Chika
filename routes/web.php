@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 // How to make livewire layouts
 // Check out post like and unlike functionality with livewire
 // How to add middlewares on livewire methods (For example only authorised user can like or create post)
+// Why use policies and not FormRequests for authorizing user actions
+// How to implement load more functionality without jquery
+
 Route::middleware('auth')->group(function () {
     Route::controller(PostController::class)->group(function() {
         Route::post('/tweet/compose','store')->name('tweet');
@@ -32,11 +35,10 @@ Route::middleware('auth')->group(function () {
     });
     Route::controller(NotificationsController::class)->group(function () {
         Route::get('/{username}/notifications','index')->name('notifications');
-        Route::get('/{username}/notification/{id}','getOne')->name('notification');
+        Route::get('/{username}/notifications/{id}','getOne')->name('notification');
     });
     Route::get('/home',[HomeController::class,'index'])->name('home');
     Route::get('/logout',[LoginController::class,'destroy'])->name('logout');
-
 });
 
 Route::middleware('guest')->group(function () {
