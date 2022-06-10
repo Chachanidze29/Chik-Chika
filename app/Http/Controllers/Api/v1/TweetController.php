@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
+use App\Services\CategoryService;
 use App\Services\PostService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class TweetController extends Controller
 {
     public function __construct(
         protected PostService $postService,
-        protected UserService $userService
+        protected UserService $userService,
+        protected CategoryService $categoryService
     ){}
 
     public function mainFeed() {
@@ -28,7 +30,7 @@ class TweetController extends Controller
 
     public function tweet(StorePostRequest $request) {
         $validated = $request->validated();
-        $category_id = Category::where('name',strtolower($validated['category_name']))->first()->id;
+        $category_id = $this->categoryService->getCategoryByName($validated['category_name'])->id;
         $user_id = Auth::id();
 
         $post = $this->postService->createPost($validated['content'],$user_id,$category_id);

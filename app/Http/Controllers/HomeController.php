@@ -15,10 +15,7 @@ class HomeController extends Controller
     ) {}
 
     public function index() {
-        return view('home',[
-            'user'=>Auth::user(),
-            'posts'=>$this->postService->getFeed(Auth::user())
-        ]);
+        return view('home');
     }
 
     public function explore(string $category_name) {

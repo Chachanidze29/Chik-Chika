@@ -8,12 +8,13 @@ use Livewire\Component;
 class Notifications extends Component
 {
     private NotificationService $notificationService;
+    private $noti;
 
     public $notifications;
     public string $username;
     public string $active;
-    public int $perPage = 15;
-    private $noti;
+    public int $perAllPage = 15;
+    public int $perUnreadPage = 15;
 
     protected $listeners = [
         'loadedMore'=>'get',
@@ -24,7 +25,7 @@ class Notifications extends Component
     public function mount(NotificationService $notificationService,string $username) {
         $this->username = $username;
 
-        $this->noti = $notificationService->getNotificationsByUserName($username)->paginate($this->perPage);
+        $this->noti = $notificationService->getNotificationsByUserName($username)->paginate($this->perAllPage);
         $this->notifications = collect($this->noti->items());
         $this->active = 'All';
     }
@@ -33,9 +34,9 @@ class Notifications extends Component
         $this->notificationService = app(NotificationService::class);
 
         if($this->active === 'All') {
-            $this->noti = $this->notificationService->getNotificationsByUserName($this->username)->paginate($this->perPage);
+            $this->noti = $this->notificationService->getNotificationsByUserName($this->username)->paginate($this->perAllPage);
         } else {
-            $this->noti = $this->notificationService->getUnreadNotificationsByUserName($this->username)->paginate($this->perPage);
+            $this->noti = $this->notificationService->getUnreadNotificationsByUserName($this->username)->paginate($this->perUnreadPage);
         }
         $this->notifications = collect($this->noti->items());
     }
@@ -61,7 +62,11 @@ class Notifications extends Component
 
     public function loadMore()
     {
-        $this->perPage += 15;
+        if($this->active === 'All') {
+            $this->perAllPage += 15;
+        }else {
+            $this->perUnreadPage += 15;
+        }
         $this->emitSelf('loadedMore');
     }
 

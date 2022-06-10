@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 // How to add middlewares on livewire methods (For example only authorised user can like or create post)
 // Why use policies and not FormRequests for authorizing user actions
 // How to implement load more functionality without jquery
+// Home livewire component not working as desired
 
 Route::middleware('auth')->group(function () {
     Route::controller(PostController::class)->group(function() {

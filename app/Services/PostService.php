@@ -15,7 +15,7 @@ class PostService
     public function getFeed(User $user) {
         $userIds = $user->followings()->pluck('id');
         $userIds[] = $user->id;
-        return Post::whereIn('user_id', $userIds)->where('parent_id',null)->latest()->paginate(15);
+        return Post::whereIn('user_id', $userIds)->where('parent_id',null)->latest();
     }
 
     public function getPostsByUserName(string $username) {
