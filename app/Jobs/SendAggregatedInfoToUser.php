@@ -4,9 +4,7 @@ namespace App\Jobs;
 
 use App\Mail\SendAggregatedInfoMail;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -14,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
-class SendAggregatedIntoToUser implements ShouldQueue
+class SendAggregatedInfoToUser implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -32,7 +30,8 @@ class SendAggregatedIntoToUser implements ShouldQueue
      */
     public function handle()
     {
-        $lastWeekDate = Carbon::now()->subDays(Carbon::now()->dayOfWeek)->subWeek()->toDateTimeString();
+
+        $lastWeekDate = now()->subDays(now()->dayOfWeek)->subWeek()->toDateTimeString();
 
         $followings = DB::table('follower_user')
             ->where('user_id',$this->user->id)

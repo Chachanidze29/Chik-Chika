@@ -7,7 +7,18 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
+use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/test',function () {
+    \Illuminate\Support\Facades\DB::listen(function ($e){
+        dump($e->sql);
+    });
+
+    \App\Models\User::orderBy('id')->take(5)->get();
+});
+
 
 // How to make livewire layouts
 // Check out post like and unlike functionality with livewire
@@ -15,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 // Why use policies and not FormRequests for authorizing user actions
 // How to implement load more functionality without jquery
 // Home livewire component not working as desired
+// Can i have two factory on same models
 
 Route::middleware('auth')->group(function () {
     Route::controller(PostController::class)->group(function() {

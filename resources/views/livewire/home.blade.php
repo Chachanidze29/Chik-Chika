@@ -23,7 +23,7 @@
     @foreach($posts as $post)
         <livewire:post :post="$post"/>
     @endforeach
-    @if(count($posts) > 0 && count($posts) < auth()->user()->posts()->count())
-        <button wire:click="loadMore" class="text-2xl border-b-2 border-b-gray-500 m-3 hover:border-blue-400 hover:text-blue-400">Load More</button>
-    @endif
+{{--    @if(count($posts) > 0 && count($posts) < auth()->user()->posts()->count())--}}
+{{--        <button wire:click="loadMore" class="text-2xl border-b-2 border-b-gray-500 m-3 hover:border-blue-400 hover:text-blue-400">Load More</button>--}}
+{{--    @endif--}}
 </div>

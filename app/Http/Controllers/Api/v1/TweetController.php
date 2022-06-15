@@ -22,8 +22,7 @@ class TweetController extends Controller
     ){}
 
     public function mainFeed() {
-        $user = $this->userService->getUserById(Auth::id());
-        $tweets = $this->postService->getFeed($user);
+        $tweets = $this->postService->getFeed();
 
         return $tweets->toJson();
     }
@@ -31,9 +30,8 @@ class TweetController extends Controller
     public function tweet(StorePostRequest $request) {
         $validated = $request->validated();
         $category_id = $this->categoryService->getCategoryByName($validated['category_name'])->id;
-        $user_id = Auth::id();
 
-        $post = $this->postService->createPost($validated['content'],$user_id,$category_id);
+        $post = $this->postService->createPost($validated['content'],Auth::id(),$category_id);
         return $post->toJson();
     }
 

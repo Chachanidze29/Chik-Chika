@@ -12,10 +12,10 @@ class PostService
 {
     public function __construct(protected Linkify $linkify){}
 
-    public function getFeed(User $user) {
-        $userIds = $user->followings()->pluck('id');
-        $userIds[] = $user->id;
-        return Post::whereIn('user_id', $userIds)->where('parent_id',null)->latest();
+    public function getFeed() {
+        $userIds = Auth::user()->followings()->pluck('id');
+        $userIds[] = Auth::id();
+        return Post::whereIn('user_id', $userIds)->where('parent_id',null)->latest()->get();
     }
 
     public function getPostsByUserName(string $username) {

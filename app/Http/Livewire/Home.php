@@ -10,28 +10,27 @@ use Livewire\Component;
 class Home extends Component
 {
     private PostService $postService;
-    private CategoryService $categoryService;
     private $p;
 
     public $posts;
     public int $perPage = 5;
     public $categories;
 
-    protected $listeners = ['loadedMore'=>'get'];
+//    protected $listeners = [
+//        'loadedMore'=>'getFeed',
+//    ];
 
     public function mount(PostService $postService,CategoryService $categoryService) {
-        $this->postService = $postService;
-        $this->categoryService = $categoryService;
-
-        $this->p = $this->postService->getFeed(Auth::user())->paginate($this->perPage);
-        $this->posts = collect($this->p->items());
-        $this->categories = $this->categoryService->getCategories();
+        $this->posts = $postService->getFeed();
+//        $this->posts = collect($this->p->items());
+        $this->categories = $categoryService->getCategories();
     }
 
-    public function get() {
+    public function getFeed() {
+        dd('Get Feed');
         $this->postService = app(PostService::class);
 
-        $this->p = $this->postService->getFeed(Auth::user())->paginate($this->perPage);
+        $this->p = $this->postService->getFeed()->paginate($this->perPage);
         $this->posts = collect($this->p->items());
     }
 

@@ -29,7 +29,7 @@ class UserService
         if($authUser) {
             return User::all()->filter(function ($user) use ($authUser) {
                 return !$user->followers->contains($authUser) && $user->id !== $authUser->id && !$user->isPrivate;
-            });
+            })->take(5);
         }
         return null;
     }

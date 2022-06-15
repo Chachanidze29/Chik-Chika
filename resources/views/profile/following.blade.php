@@ -14,8 +14,12 @@
         <h1 class="text-2xl font-bold m-2 ml-0">Followings:</h1>
         <ul>
         @foreach($following as $f)
-            <li class="m-1 ml-0">
+            <li class="m-1 ml-0 flex items-center justify-between">
                 <x-user-profile-link href="{{url($f->username)}}" value="{{$f->username}}" />
+                <form action="{{route('unfollow',['id'=>$f->id])}}" method="post">
+                    @csrf
+                    <x-my-button :isRed="true" value="Unfollow"/>
+                </form>
             </li>
         @endforeach
         </ul>
