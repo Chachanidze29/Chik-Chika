@@ -8,7 +8,9 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
 use App\Models\Post;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test',function () {
@@ -28,7 +30,20 @@ Route::get('/test',function () {
 // Home livewire component not working as desired
 // Can i have two factory on same models
 
-Route::middleware('auth')->group(function () {
+
+Route::middleware('auth')->group(function (){
+    Route::view('/email/verify','auth.verify-email')->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}',function (EmailVerificationRequest $request){
+        $request->fulfill();
+        return redirect('/home');
+    })->name('verification.verify');
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('message', 'Verification link sent!');
+    })->middleware('throttle:6,1')->name('verification.send');
+});
+
+Route::middleware(['auth','verified'])->group(function () {
     Route::controller(PostController::class)->group(function() {
         Route::post('/tweet/compose','store')->name('tweet');
         Route::post('/post/{id}/comment','storeComment')->name('comment');
@@ -51,8 +66,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/{username}/notifications/{id}','getOne')->name('notification');
     });
     Route::get('/home',[HomeController::class,'index'])->name('home');
-    Route::get('/logout',[LoginController::class,'destroy'])->name('logout');
 });
+
+Route::get('/logout',[LoginController::class,'destroy'])->name('logout')->middleware('auth');
 
 Route::middleware('guest')->group(function () {
     Route::view('/','welcome');
