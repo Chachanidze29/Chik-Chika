@@ -7,32 +7,17 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
-use App\Models\Post;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/test',function () {
-    \Illuminate\Support\Facades\DB::listen(function ($e){
-        dump($e->sql);
-    });
-
-    \App\Models\User::orderBy('id')->take(5)->get();
-});
-
-
-// How to make livewire layouts
-// Check out post like and unlike functionality with livewire
-// How to add middlewares on livewire methods (For example only authorised user can like or create post)
-// Why use policies and not FormRequests for authorizing user actions
-// How to implement load more functionality without jquery
-// Home livewire component not working as desired
-// Can i have two factory on same models
-
+use Illuminate\Http\Request;
 
 Route::middleware('auth')->group(function (){
-    Route::view('/email/verify','auth.verify-email')->name('verification.notice');
+    Route::get('/email/verify', function (Request $request) {
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect('/home');
+        }
+        return view('auth.verify-email');
+    })->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}',function (EmailVerificationRequest $request){
         $request->fulfill();
         return redirect('/home');

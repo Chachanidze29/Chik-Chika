@@ -1,6 +1,9 @@
 @extends('layouts.app')
-
-@section('title','Post')
+@if($parent)
+    @section('title','Comment')
+@else
+    @section('title','Post')
+@endif
 @section('back_url','/home')
 
 @section('content')

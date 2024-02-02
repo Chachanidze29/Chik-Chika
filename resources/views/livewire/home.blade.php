@@ -1,5 +1,5 @@
 <div>
-    <form onclick="document.getElementById('text').focus()" class="flex relative flex-row justify-between items-center mb-2" action="{{route('tweet')}}" method="post">
+    <form class="flex relative flex-row justify-between items-center mb-2" action="{{route('tweet')}}" method="post">
         @csrf
         <div class="relative basis-5/6">
             <textarea class="border-gray-400 rounded w-full border-2 p-2 pr-48" autocomplete="off"  id="text" name="content" placeholder="What's Going On">{{old('content')}}</textarea>
